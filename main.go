@@ -1,17 +1,32 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
-	"html/template"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 
-func err(w http.ResponseWriter, err error, cod string) {
+func conn() (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", "./sait.db")
+
+	//db.SetMaxOpenConns(1)
+
+	if err != nil {
+		return db, err
+	}
+
+	return db, nil
+}
+
+
+func httpErr(w http.ResponseWriter, err error, cod string) {
 	fmt.Println(err.Error())
 	w.Write(
 		[]byte(fmt.Sprintf("ERROR %s", cod)),
@@ -20,13 +35,25 @@ func err(w http.ResponseWriter, err error, cod string) {
 
 
 func index(w http.ResponseWriter, r *http.Request) {
-	tmpl, errTmpl := template.ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html")
+	db, errConn := conn()
 
-	if errTmpl != nil {
-		err(w, errTmpl, "404")
+	if errConn != nil {
+		httpErr(w, errConn, "404")
 	}
 
-	tmpl.ExecuteTemplate(w, "index", nil)
+	defer db.Close()
+
+	tmpl, errTmpl := template.ParseFiles("templates/index.html", "templates/default.html")
+
+	if errTmpl != nil {
+		httpErr(w, errTmpl, "404")
+	}
+
+	errRenderTmpl := tmpl.Execute(w, nil)
+
+	if errRenderTmpl != nil {
+		httpErr(w, errTmpl, "404")
+	} 
 }
 
 
@@ -35,6 +62,10 @@ func body() {
 	r.Use(middleware.Logger)
 
 	r.Get("/", index)
+
+	fileServer := http.FileServer(http.Dir("./static/"))
+
+	r.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
