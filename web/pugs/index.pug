@@ -1,11 +1,6 @@
 | {{template "default" .}}
 
-| {{define "title"}}doc{{end}}
+| {{define "title"}}Главное{{end}}
 | {{define "content"}}
-|   {{range $s := .Sections}}
-div.section
-  h2 {{$s.Title}}
-|   {{else}}
-h1 Ничего нет
-|   {{end}}
+h1 Hello world
 | {{end}}

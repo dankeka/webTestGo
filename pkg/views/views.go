@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -38,7 +39,9 @@ type IndexData struct {
 	Sections []Section
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func Index(c *gin.Context) {
+	var w http.ResponseWriter = c.Writer
+
 	db, errConn := conn()
 
 	if errConn != nil {
