@@ -1,4 +1,4 @@
-module mod
+module github.com/dankeka/webTestGo
 
 go 1.16
 

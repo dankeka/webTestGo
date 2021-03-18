@@ -1,0 +1,11 @@
+| {{template "default" .}}
+
+| {{define "title"}}doc{{end}}
+| {{define "content"}}
+|   {{range $s := .Sections}}
+div.section
+  h2 {{$s.Title}}
+|   {{else}}
+h1 Ничего нет
+|   {{end}}
+| {{end}}
