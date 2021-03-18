@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/dankeka/webTestGo/types"
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -22,22 +23,13 @@ func conn() (*sql.DB, error) {
 }
 
 
-func httpErr(w http.ResponseWriter, err error, cod string) {
+func httpErr(w http.ResponseWriter, err error, cod int) {
 	fmt.Println(err.Error())
 	w.Write(
-		[]byte(fmt.Sprintf("ERROR %s", cod)),
+		[]byte(fmt.Sprintf("ERROR %d", cod)),
 	)
 }
 
-
-type Section struct {
-	ID    int    `json:"id"`
-	Title string `json:"title"`
-}
-
-type IndexData struct {
-	Sections []Section
-}
 
 func Index(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
@@ -45,7 +37,7 @@ func Index(c *gin.Context) {
 	db, errConn := conn()
 
 	if errConn != nil {
-		httpErr(w, errConn, "404")
+		httpErr(w, errConn, 404)
 	}
 
 	defer db.Close()
@@ -56,20 +48,20 @@ func Index(c *gin.Context) {
 	rows, errSQL = db.Query("SELECT id, title FROM Section")
 
 	if errSQL != nil {
-		httpErr(w, errSQL, "404")
+		httpErr(w, errSQL, 404)
 	}
 
 	defer rows.Close()
 
-	sections := []Section{}
+	sections := []types.Section{}
 
 	if rows != nil {
 		for rows.Next() {
-			s := Section{}
+			s := types.Section{}
 			errScan := rows.Scan(&s.ID, &s.Title)
 
 			if errScan != nil {
-				httpErr(w, errScan, "404")
+				httpErr(w, errScan, 404)
 			}
 
 			sections = append(sections, s)
@@ -79,16 +71,32 @@ func Index(c *gin.Context) {
 	tmpl, errTmpl := template.ParseFiles("web/templates/index.html", "web/templates/default.html")
 
 	if errTmpl != nil {
-		httpErr(w, errTmpl, "404")
+		httpErr(w, errTmpl, 404)
 	}
 
-	data := IndexData{
+	data := types.IndexData{
 		Sections: sections,
 	}
 
 	errRenderTmpl := tmpl.Execute(w, data)
 
 	if errRenderTmpl != nil {
-		httpErr(w, errTmpl, "404")
+		httpErr(w, errTmpl, 404)
 	} 
+}
+
+func RegisterTmpl(c *gin.Context) {
+	var w http.ResponseWriter = c.Writer
+
+	tmpl, errTmpl := template.ParseFiles("web/templates/register.html", "web/templates/default.html")
+
+	if errTmpl != nil {
+		httpErr(w, errTmpl, 404)
+	}
+
+	errRenderTmpl := tmpl.Execute(w, nil)
+
+	if errRenderTmpl != nil {
+		httpErr(w, errRenderTmpl, 404)
+	}
 }

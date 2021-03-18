@@ -1,7 +1,37 @@
-@media screen and (max-width: 960px) {
+main {
+  padding-top: 10px; }
+
+.register .registerForm {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 920px; }
+  .register .registerForm div.mb-3 {
+    max-width: 900px; }
+  .register .registerForm label {
+    font-size: 1em; }
+  .register .registerForm label.necessarilyInput::before {
+    content: "*";
+    color: red;
+    font-size: 0.9em;
+    position: relative;
+    bottom: 3px; }
+  .register .registerForm button[type="submit"] {
+    width: 250px;
+    margin-left: 12px; }
+
+@media screen and (max-width: 992px) {
+  header {
+    padding: 0 10px 10px 10px; }
+
   header > nav {
-    padding: 10px; } }
-@media screen and (min-width: 960px) {
+    padding: 10px; }
+
+  header ul li a {
+    padding: 5px; } }
+@media screen and (min-width: 992px) {
+  .navbar-brand {
+    margin-left: 8px; }
+
   .navbar-container {
     position: sticky;
     top: 0;
