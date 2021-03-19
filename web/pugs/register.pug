@@ -7,20 +7,20 @@ section.register
     div.mb-3.row
       label(for="name" class="form-label necessarilyInput col-md-3 col-form-label") Имя:
       div.col-md-8
-        input(id="name" class="form-control form-control-sm")
+        input(id="name" name="name" class="form-control form-control-sm")
     div.mb-3.row
       label(for="email" class="form-label col-md-3 col-form-label") Email:
       div.col-md-8
-        input(id="email" class="form-control form-control-sm" aria-describedby="emailHelp")
+        input(id="email" name="email" class="form-control form-control-sm" aria-describedby="emailHelp")
         div(id="emailHelp" class="form-text") Необязательно
     div.mb-3.row
       label(for="password1" class="form-label necessarilyInput col-md-3 col-form-label") Пароль:
       div.col-md-8
-        input(id="password1" class="form-control form-control-sm")
+        input(id="password1" name="password1" class="form-control form-control-sm")
     div.mb-3.row
       label(for="password2" class="form-label necessarilyInput col-md-3 col-form-label") Потвердить пароль:
       div.col-sm-8
-        input(id="password2" class="form-control form-control-sm")
+        input(id="password2" name="password2" class="form-control form-control-sm")
     div.mb-3.row
       button(type="submit" class="btn btn-primary") Зарегестрироваться
 

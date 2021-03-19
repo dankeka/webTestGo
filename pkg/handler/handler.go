@@ -19,7 +19,8 @@ func (h *Handler) InitRouters() *gin.Engine {
 	register := r.Group("/register")
 	{
 		register.GET("/get", views.RegisterTmpl)
-		//register.POST("/post", nil)
+		//register.GET("/checkUserName", views.getUserIdByNameOrEmail)
+		register.POST("/post", views.RegisterPost)
 	}
 
 	fs := http.Dir("./web/static")

@@ -1,4 +1,3 @@
-const email = document.getElementById("email");
 const name = document.getElementById("name");
 const password1 = document.getElementById("password1");
 const password2 = document.getElementById("password2");
@@ -7,7 +6,15 @@ const password2 = document.getElementById("password2");
 function checkEmail() {
   let reEmail = /.+\@.+\..+/g;
 
-  return reEmail.test(email.value);
+  let email = document.getElementById("email");
+
+  let checkEm = reEmail.test(email.value);
+
+  if(checkEm || !email.value) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function checkPassword() {
@@ -15,7 +22,7 @@ function checkPassword() {
 }
 
 document.getElementById("formRegister").onsubmit = async (e) => {
-  e.preventDefault();
+  //e.preventDefault();
   
   if(!checkEmail()) {
     try {
@@ -41,7 +48,6 @@ document.getElementById("formRegister").onsubmit = async (e) => {
     }
   }
 
-
   if(!checkPassword()) {
     try {
       let el = document.getElementById("errPasswordDiv");
@@ -66,5 +72,10 @@ document.getElementById("formRegister").onsubmit = async (e) => {
     }
   }
 
-  return false;
+  if(checkEmail() && checkPassword()) {
+    return true;
+  } else {
+    e.preventDefault();
+    return false;
+  }
 };

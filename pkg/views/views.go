@@ -85,18 +85,3 @@ func Index(c *gin.Context) {
 	} 
 }
 
-func RegisterTmpl(c *gin.Context) {
-	var w http.ResponseWriter = c.Writer
-
-	tmpl, errTmpl := template.ParseFiles("web/templates/register.html", "web/templates/default.html")
-
-	if errTmpl != nil {
-		httpErr(w, errTmpl, 404)
-	}
-
-	errRenderTmpl := tmpl.Execute(w, nil)
-
-	if errRenderTmpl != nil {
-		httpErr(w, errRenderTmpl, 404)
-	}
-}
