@@ -1,12 +1,11 @@
-const name = document.getElementById("name");
+const username = document.getElementById("name");
+const email = document.getElementById("email");
 const password1 = document.getElementById("password1");
 const password2 = document.getElementById("password2");
 
 
 function checkEmail() {
   let reEmail = /.+\@.+\..+/g;
-
-  let email = document.getElementById("email");
 
   let checkEm = reEmail.test(email.value);
 
@@ -18,12 +17,14 @@ function checkEmail() {
 }
 
 function checkPassword() {
-  return password1.value == password2.value;
+  return password1.value == password2.value && password1.value != "" && password2.value != "";
+}
+
+function checkUserName() {
+  return username.value != "";
 }
 
 document.getElementById("formRegister").onsubmit = async (e) => {
-  //e.preventDefault();
-  
   if(!checkEmail()) {
     try {
       let el = document.getElementById("errEmailDiv");
@@ -72,7 +73,31 @@ document.getElementById("formRegister").onsubmit = async (e) => {
     }
   }
 
-  if(checkEmail() && checkPassword()) {
+  if(!checkUserName()) {
+    try {
+      let el = document.getElementById("errUserNameDiv");
+      el.remove();
+    } catch {
+      // pass
+    }
+
+    let userNameError = document.createElement("div");
+    userNameError.id = "errUserNameDiv";
+    userNameError.innerHTML = `
+        <span style="color: red; font-size: .9em;">Поле имени пустое!</span>
+    `;
+
+    username.after(userNameError);
+  } else {
+    try {
+      let el = document.getElementById("errUserNameDiv");
+      el.remove();
+    } catch {
+      // pass
+    }
+  }
+
+  if(checkPassword() && checkEmail() && checkUserName()) {
     return true;
   } else {
     e.preventDefault();

@@ -5,11 +5,26 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"reflect"
 
-	//"github.com/snowplow/referer-parser/go"
+	serv "github.com/dankeka/webTestGo"
+	"github.com/dankeka/webTestGo/types"
 	"github.com/gin-gonic/gin"
 )
+
+
+func SetErrRegisterCookie(c *gin.Context, value string) {
+	cookie, err := c.Cookie("registerErr")
+	
+	if cookie == "" || err != nil {
+		c.SetCookie("registerErr", value, 3600, "/", serv.DOMAIN, false, false)
+	}
+}
+
+
+func DeleteErrRegisterCookie(c *gin.Context) {
+	c.SetCookie("registerErr", "", -1, "/", serv.DOMAIN, false, false)
+}
+
 
 // GET
 func RegisterTmpl(c *gin.Context) {
@@ -21,72 +36,25 @@ func RegisterTmpl(c *gin.Context) {
 		httpErr(w, errTmpl, 404)
 	}
 
-	errRenderTmpl := tmpl.Execute(w, nil)
+	data := types.RegisterTmplStruct{}
+
+	checkRegisterErr, errCookie := c.Cookie("registerErr")
+	if checkRegisterErr == "" || errCookie != nil {
+		data.ErrRegister = false
+		data.ErrText = ""
+	} else {
+		data.ErrRegister = true
+		data.ErrText = checkRegisterErr
+		DeleteErrRegisterCookie(c)
+	}
+
+	errRenderTmpl := tmpl.Execute(w, data)
 
 	if errRenderTmpl != nil {
 		httpErr(w, errRenderTmpl, 404)
 	}
 }
 
-// GET
-func getUserIdByNameOrEmail(c *gin.Context) {
-	name := c.Request.FormValue("name")
-	email := c.Request.FormValue("email")
-
-	db, errConn := conn()
-
-	defer db.Close()
-
-	if errConn != nil {
-		jsonData := []byte(
-			fmt.Sprintf(`{
-				"check": %t,
-				"error": %t,
-			}`, false, true),
-		)
-		c.Data(http.StatusOK, "application/json", jsonData)
-
-		return
-	}
-
-	checkUserRow := db.QueryRow("SELECT id FROM User WHERE name=$1 OR email=$2", name, email)
-
-	var userId sql.NullInt32
-
-	errScan := checkUserRow.Scan(&userId)
-
-	if errScan != nil {
-		jsonData := []byte(
-			fmt.Sprintf(`{
-				"check": %t,
-				"error": %t,
-			}`, false, true),
-		)
-		c.Data(http.StatusOK, "application/json", jsonData)
-
-		return
-	}
-
-	if reflect.TypeOf(userId) != nil {
-		jsonData := []byte(
-			fmt.Sprintf(`{
-				"check": %t,
-				"error": %t,
-			}`, false, true),
-		)
-		c.Data(http.StatusOK, "application/json", jsonData)
-
-		return
-	}
-
-	jsonData := []byte(
-		fmt.Sprintf(`{
-			"check": %t,
-			"error": %t,
-		}`, true, false),
-	)
-	c.Data(http.StatusOK, "application/json", jsonData)
-}
 
 // POST
 func RegisterPost(c *gin.Context) {
@@ -94,35 +62,46 @@ func RegisterPost(c *gin.Context) {
 	var r *http.Request = c.Request
 
 	username := r.FormValue("name")
+
+	if username == "" {
+		fmt.Println("error username")
+		SetErrRegisterCookie(c, "Поле имени пустое")
+		http.Redirect(w, r, "/register/get", http.StatusSeeOther)
+		return
+	}
+
 	email := r.FormValue("email")
 	password1 := r.FormValue("password1")
 	password2 := r.FormValue("password2")
 
 	if password1 != password2 {
+		fmt.Println("error password")
+		SetErrRegisterCookie(c, "Пароли не совпадают!")
 		http.Redirect(w, r, "/register/get", http.StatusSeeOther)
 		return
 	}
 
 	db, errConn := conn()
 
-	defer db.Close()
-
 	if errConn != nil {
 		httpErr(w, errConn, 404)
 		return
 	}
+
+	defer db.Close()
 
 	row := db.QueryRow("SELECT id FROM User WHERE name=$1 OR email=$2", username, email)
 
 	var checkUserName sql.NullInt32
 	errScan := row.Scan(&checkUserName)
 
-	if errScan != nil {
+	if errScan != nil && errScan != sql.ErrNoRows {
 		httpErr(w, errScan, 404)
 		return
 	}
 
-	if reflect.TypeOf(checkUserName) != nil {
+	if checkUserName.Valid {
+		SetErrRegisterCookie(c, "Пользователь с таким именем или эл. почтой уже существует!")
 		http.Redirect(w, r, "/register/get", http.StatusSeeOther)
 		return
 	}

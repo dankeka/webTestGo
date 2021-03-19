@@ -5,6 +5,8 @@
 section.register 
   form.registerForm#formRegister(method="POST" action="/register/post")
     div.mb-3.row
+      h1 Регестрация
+    div.mb-3.row
       label(for="name" class="form-label necessarilyInput col-md-3 col-form-label") Имя:
       div.col-md-8
         input(id="name" name="name" class="form-control form-control-sm")
@@ -27,5 +29,9 @@ section.register
 | {{end}}
 
 | {{define "scripts"}}
+|   {{if .ErrRegister}}
+script.
+  alert("{{.ErrText}}");
+|   {{end}}
 script(src="/static/js/register.js")
 | {{end}}
