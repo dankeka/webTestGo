@@ -46,6 +46,8 @@ func Index(c *gin.Context) {
 		}
 	}
 
+	isLogin := CheckLoginUser(c)
+
 	tmpl, errTmpl := template.ParseFiles("web/templates/index.html", "web/templates/default.html")
 
 	if errTmpl != nil {
@@ -54,6 +56,7 @@ func Index(c *gin.Context) {
 
 	data := types.IndexData{
 		Sections: sections,
+		IsLogin: isLogin,
 	}
 
 	errRenderTmpl := tmpl.Execute(w, data)

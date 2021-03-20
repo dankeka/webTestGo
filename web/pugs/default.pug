@@ -21,6 +21,9 @@ html(lang="en")
                 a(class="nav-link" href="/") Главное
               li(class="nav-item")
                 a(class="nav-link" href="/register/get") Регестрация
+              li(class="nav-item")
+                a(class="nav-link" href="/login/get") Авторизация
+              | {{template "header" .}}
 
       main(class="col-lg-9 content-container")
         | {{template "content" .}}

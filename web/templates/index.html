@@ -1,6 +1,10 @@
 
 {{template "default" .}}
 {{define "title"}}Главное{{end}}
+{{define "header"}}
+  {{if .IsLogin}}
+<li class="nav-item"><a class="nav-link" href="/logout">Выйти</a></li>  {{end}}
+{{end}}
 {{define "content"}}
 <h1>Hello world</h1>{{end}}
 {{define "scripts"}}{{end}}

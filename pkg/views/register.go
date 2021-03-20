@@ -36,17 +36,21 @@ func RegisterTmpl(c *gin.Context) {
 		httpErr(w, errTmpl, 404)
 	}
 
-	data := types.RegisterTmplStruct{}
+	data := types.RegisterStruct{}
+
+	isLogin := CheckLoginUser(c)
 
 	checkRegisterErr, errCookie := c.Cookie("registerErr")
 	if checkRegisterErr == "" || errCookie != nil {
 		data.ErrRegister = false
 		data.ErrText = ""
+		DeleteErrRegisterCookie(c)
 	} else {
 		data.ErrRegister = true
 		data.ErrText = checkRegisterErr
 		DeleteErrRegisterCookie(c)
 	}
+	data.IsLogin = isLogin
 
 	errRenderTmpl := tmpl.Execute(w, data)
 

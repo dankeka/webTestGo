@@ -19,6 +19,18 @@ main {
     width: 250px;
     margin-left: 12px; }
 
+.login .loginForm {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 920px; }
+  .login .loginForm label {
+    font-size: 1em; }
+  .login .loginForm div.mb-3 {
+    max-width: 900px; }
+  .login .loginForm button[type="submit"] {
+    width: 250px;
+    margin-left: 12px; }
+
 @media screen and (max-width: 992px) {
   header {
     padding: 0 10px 10px 10px; }
