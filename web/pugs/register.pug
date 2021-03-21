@@ -2,13 +2,6 @@
 
 | {{define "title"}}Регестрация{{end}}
 
-| {{define "header"}}
-|   {{if .IsLogin}}
-li(class="nav-item")
-  a(class="nav-link" href="/logout") Выйти
-|   {{end}}
-| {{end}}
-
 | {{define "content"}}
 section.register 
   form.registerForm#formRegister(method="POST" action="/register/post")

@@ -34,6 +34,12 @@ func (h *Handler) InitRouters() *gin.Engine {
 	}
 	r.GET("/logout", views.Logout)
 
+	user := r.Group("/user")
+	{
+		user.GET("/me", views.MyUserProfil)
+		user.POST("/updateSettings", views.UpdateUserSettings)
+	}
+
 	fs := http.Dir("./web/static")
 
 	r.StaticFS("/static/", fs)

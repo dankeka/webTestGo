@@ -1,13 +1,6 @@
 | {{template "default" .}}
 | {{define "title"}}Авторизация{{end}}
 
-| {{define "header"}}
-|   {{if .IsLogin}}
-li(class="nav-item")
-  a(class="nav-link" href="/logout") Выйти
-|   {{end}}
-| {{end}}
-
 | {{define "content"}}
 section.login
   form.loginForm(method="POST" action="/login/post")
@@ -24,6 +17,7 @@ section.login
     div.mb-3.row
       button(type="submit" class="btn btn-primary") Войти
 | {{end}}
+
 | {{define "scripts"}}
 |   {{if .ErrLogin}}
 script alert("{{.ErrText}}");

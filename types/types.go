@@ -21,3 +21,15 @@ type LoginGetStruct struct {
 	ErrText  string
 	IsLogin  bool
 }
+
+type MyUserProfilStruct struct {
+	Access    bool
+	IsLogin   bool
+	User			User
+}
+
+type UpdateUserSettingsFormStruct struct {
+	Age   string
+	Site  string
+	Email string
+}

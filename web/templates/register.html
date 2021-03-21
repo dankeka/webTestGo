@@ -1,10 +1,6 @@
 
 {{template "default" .}}
 {{define "title"}}Регестрация{{end}}
-{{define "header"}}
-  {{if .IsLogin}}
-<li class="nav-item"><a class="nav-link" href="/logout">Выйти</a></li>  {{end}}
-{{end}}
 {{define "content"}}
 <section class="register"> 
   <form class="registerForm" id="formRegister" method="POST" action="/register/post">

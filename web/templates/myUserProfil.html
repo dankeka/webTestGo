@@ -1,0 +1,53 @@
+
+{{template "default" .}}
+{{define "title"}}Пользователь{{end}}
+{{define "content"}}
+  {{if and .IsLogin .Access}}
+<section class="userProfil row">
+  <div class="userNameAndAvatar col-12 col-lg-6">
+    <div class="UserAvatarDiv"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" alt="аватарка"/></div>
+    <div class="UserNameDiv">
+      <h2>{{.User.Name}}</h2>{{if ne .User.Age.Int32 0}}<span>{{.User.Age.Int32}}</span>{{end}}
+    </div>
+  </div>
+  <div class="userInfo col-12 col-lg-6">
+    <div class="settings">
+      <div class="dropdown">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dropSettingsUser" aria-expanded="false" aria-controls="dropSettingsUser">Настройки</button>
+        <div class="collapse" id="dropSettingsUser">
+          <form method="POST" action="/user/updateSettings">
+            <div class="card card-body"> 
+              <div class="mb-2">
+                <label class="form-label" for="userAge">Возвраст</label>
+                <input class="form-control form-control-sm" id="userAge" name="userAge"/>
+              </div>{{if eq .User.Email.String ""}}
+              <div class="mb-2">
+                <label class="form-label" for="userSite">Горад</label>
+                <input class="form-control form-control-sm" id="userSite" name="userSite"/>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="userEmail">Email</label>
+                <input class="form-control form-control-sm" id="userEmail" name="userEmail"/>
+              </div>{{else}}
+              <div class="mb-3">
+                <label class="form-label" for="userSite">Горад</label>
+                <input class="form-control form-control-sm" id="userSite" name="userSite"/>
+              </div>
+              <input type="hidden" name="userEmail" value=""/>{{end}}
+              <div>
+                <button class="btn btn-outline-success" type="submit">Сохнранить</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>  {{else}}
+<h1> 
+  <pre>У вас нету ака =( 
+<a href="/register/get">Создайте</a> акк или <a href="/login/get">войдите</a></pre>
+</h1>  {{end}}
+{{end}}
+{{define "scripts"}}
+{{end}}

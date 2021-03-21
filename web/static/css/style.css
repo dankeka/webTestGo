@@ -31,6 +31,17 @@ main {
     width: 250px;
     margin-left: 12px; }
 
+.userProfil {
+  padding: 0 10px; }
+  .userProfil .userNameAndAvatar {
+    display: flex; }
+    .userProfil .userNameAndAvatar .UserAvatarDiv img {
+      width: 200px; }
+    .userProfil .userNameAndAvatar .UserNameDiv {
+      margin-left: 20px; }
+  .userProfil .userInfo button[aria-controls="dropSettingsUser"] {
+    width: 100%; }
+
 @media screen and (max-width: 992px) {
   header {
     padding: 0 10px 10px 10px; }

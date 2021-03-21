@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -41,4 +42,22 @@ func CheckLoginUser(c *gin.Context) bool {
 	}
 
 	return isLogin;
+}
+
+func SessionUserId(c *gin.Context) int {
+	session := sessions.Default(c)
+
+	userId := session.Get("UserId")
+
+	if userId == nil {
+		return 0
+	}
+
+	result, err := strconv.Atoi( fmt.Sprintf("%v", userId) )
+
+	if err != nil {
+		return 0
+	}
+
+	return result
 }

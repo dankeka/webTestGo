@@ -17,7 +17,9 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item"><a class="nav-link" href="/">Главное</a></li>
               <li class="nav-item"><a class="nav-link" href="/register/get">Регестрация</a></li>
-              <li class="nav-item"><a class="nav-link" href="/login/get">Авторизация</a></li>{{template "header" .}}
+              <li class="nav-item"><a class="nav-link" href="/login/get">Авторизация</a></li>  {{if .IsLogin}}
+              <li class="nav-item"><a class="nav-link" href="/user/me">Мой профиль</a></li>
+              <li class="nav-item"><a class="nav-link" href="/logout">Выйти</a></li>  {{end}}
             </ul>
           </div>
         </nav>

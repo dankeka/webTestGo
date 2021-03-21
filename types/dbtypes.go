@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"database/sql"
+	"time"
+)
 
 type Section struct {
 	ID    int    `json:"id"`
@@ -8,11 +11,14 @@ type Section struct {
 }
 
 type User struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
-	Avatar   string `json:"avatar"`
+	ID        int            `json:"id"`
+	Name      string         `json:"name"`
+	Avatar    string         `json:"avatar"`
+	Age       sql.NullInt32  `json:"age"`
+	Site      sql.NullString `json:"site"`
+	AboutMe   sql.NullString `json:"about_me"`
+	Email     sql.NullString `json:"email"`
+	// not password
 }
 
 type Announcement struct {

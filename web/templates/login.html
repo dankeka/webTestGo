@@ -1,10 +1,6 @@
 
 {{template "default" .}}
 {{define "title"}}Авторизация{{end}}
-{{define "header"}}
-  {{if .IsLogin}}
-<li class="nav-item"><a class="nav-link" href="/logout">Выйти</a></li>  {{end}}
-{{end}}
 {{define "content"}}
 <section class="login">
   <form class="loginForm" method="POST" action="/login/post">
