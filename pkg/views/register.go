@@ -110,7 +110,9 @@ func RegisterPost(c *gin.Context) {
 		return
 	}
 
-	_, errExec := db.Exec("INSERT INTO User(name, email, password) VALUES ($1, $2, $3)", username, email, password1)
+	hashPassword := MD5Encode(password1)
+
+	_, errExec := db.Exec("INSERT INTO User(name, email, password) VALUES ($1, $2, $3)", username, email, hashPassword)
 
 	if errExec != nil {
 		httpErr(w, errExec, 404)

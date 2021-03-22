@@ -61,3 +61,5 @@ func SessionUserId(c *gin.Context) int {
 
 	return result
 }
+
+

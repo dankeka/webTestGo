@@ -92,6 +92,8 @@ func LoginPost(c *gin.Context) {
 	var errScan error
 	var userId sql.NullInt32
 
+	user.Password = MD5Encode(user.Password)
+
 	if isEmail {
 		row = db.QueryRow("SELECT id FROM User WHERE email=$1 AND password=$2", user.NameOrEmail, user.Password)
 		errScan = row.Scan(&userId)

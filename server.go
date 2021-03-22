@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+const SALT string = "Dygcwc8232jbtwe82c8t"
 const DOMAIN string = "localhost"
 
 type Server struct {
