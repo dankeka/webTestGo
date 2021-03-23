@@ -25,6 +25,7 @@ section.register
       div.col-sm-8
         input(id="password2" name="password2" class="form-control form-control-sm")
     div.mb-3.row
+      input(type="hidden", name="csrfToken" value="{{.Csrf}}" readonly)
       button(type="submit" class="btn btn-primary") Зарегестрироваться
 
 | {{end}}

@@ -51,6 +51,14 @@ func LoginGet(c *gin.Context) {
 	}
 	data.IsLogin = CheckLoginUser(c)
 
+	csrfToken, errGenerateCsrf := CsrfGenerate(c)
+
+	if errGenerateCsrf != nil {
+		httpErr(w, errGenerateCsrf, 404)
+	}
+
+	data.Csrf = csrfToken
+
 	errRenderTmpl := tmpl.Execute(w, data)
 
 	if errRenderTmpl != nil {
@@ -63,6 +71,14 @@ func LoginGet(c *gin.Context) {
 func LoginPost(c *gin.Context) {
 	var r *http.Request = c.Request
 	var w http.ResponseWriter = c.Writer
+
+	csrfToken := r.FormValue("csrfToken")
+
+	chechCsrf := CheckCsrf(c, csrfToken)
+
+	if !chechCsrf {
+		http.Error(w, "ERROR", 404)
+	}
 
 	user := types.LoginPostStruct{
 		NameOrEmail: r.FormValue("nameOrEmail"),

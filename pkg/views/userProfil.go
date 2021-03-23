@@ -1,6 +1,7 @@
 package views
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -52,9 +53,9 @@ func MyUserProfil(c *gin.Context) {
 
 	defer db.Close()
 
-	row := db.QueryRow("SELECT name, avatar, email, site, age, about_me FROM User WHERE id=$1", userId)
+	row := db.QueryRow("SELECT name, avatar, email, pub_email, site, age, about_me FROM User WHERE id=$1", userId)
 	
-	errScan := row.Scan(&data.User.Name, &data.User.Avatar, &data.User.Email, &data.User.Site, &data.User.Age, &data.User.AboutMe)
+	errScan := row.Scan(&data.User.Name, &data.User.Avatar, &data.User.Email, &data.User.PubEmail, &data.User.Site, &data.User.Age, &data.User.AboutMe)
 
 	if errScan != nil {
 		httpErr(w, errScan, 404)
@@ -91,6 +92,8 @@ func UpdateUserSettings(c *gin.Context) {
 		Age: r.FormValue("userAge"),
 		Site: r.FormValue("userSite"),
 		Email: r.FormValue("userEmail"),
+		PubEmail: r.FormValue("pubEmail"),
+		AboutMe: r.FormValue("aboueMeTextarea"),
 	}
 
 	db, errConn := conn()
@@ -118,7 +121,7 @@ func UpdateUserSettings(c *gin.Context) {
 	switch {
 	case form.Email != "":
 		_, errExec = db.Exec(
-			"UPDATE User SET email=$3 WHERE id=$4",
+			"UPDATE User SET email=$1 WHERE id=$2",
 			form.Email,
 			userId,
 		)
@@ -128,10 +131,30 @@ func UpdateUserSettings(c *gin.Context) {
 			return
 		}
 		fallthrough
+	
+	case form.PubEmail != "":
+		fmt.Println(form.PubEmail)
+		if form.PubEmail == "1" {
+			_, errExec = db.Exec(
+				"UPDATE User SET pub_email=1 WHERE id=$2",
+				userId,
+			)
+		} else if form.PubEmail == "0" {
+			_, errExec = db.Exec(
+				"UPDATE User SET pub_email=0 WHERE id=$2",
+				userId,
+			)
+		}
+	
+		if errExec != nil {
+			httpErr(w, errExec, 404)
+			return
+		}
+		fallthrough
 
 	case form.Site != "":
 		_, errExec = db.Exec(
-			"UPDATE User SET site=$3 WHERE id=$4",
+			"UPDATE User SET site=$1 WHERE id=$2",
 			form.Site,
 			userId,
 		)
@@ -141,10 +164,24 @@ func UpdateUserSettings(c *gin.Context) {
 			return
 		}
 		fallthrough
+
 	case form.Age != "": 
 		_, errExec = db.Exec(
-			"UPDATE User SET age=$3 WHERE id=$4",
+			"UPDATE User SET age=$1 WHERE id=$2",
 			userAge,
+			userId,
+		)
+
+		if errExec != nil {
+			httpErr(w, errExec, 404)
+			return
+		}
+		fallthrough
+
+	case form.AboutMe != "":
+		_, errExec = db.Exec(
+			"UPDATE User SET about_me=$1 WHERE id=$2",
+			form.AboutMe,
 			userId,
 		)
 

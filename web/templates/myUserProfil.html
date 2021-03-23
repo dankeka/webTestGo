@@ -4,36 +4,50 @@
 {{define "content"}}
   {{if and .IsLogin .Access}}
 <section class="userProfil row">
-  <div class="userNameAndAvatar col-12 col-lg-6">
+  <div class="UserPubInfo col-11 col-md-10 col-lg-5">
     <div class="UserAvatarDiv"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" alt="аватарка"/></div>
-    <div class="UserNameDiv">
-      <h2>{{.User.Name}}</h2>{{if ne .User.Age.Int32 0}}<span>{{.User.Age.Int32}}</span>{{end}}
+    <div class="UserPubMainInfo">
+      <h2>{{.User.Name}}</h2>{{if ne .User.Age.Int32 0}}<span>Возвраст: <span class="age">{{.User.Age.Int32}}</span></span><br/>{{end}}
+      {{if .User.PubEmail.Bool}}<span class="email">{{.User.Email.String}}</span><br/>{{end}}
+      {{if ne .User.AboutMe.String ""}}
+      <button class="btn btn-link btn-sm px-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboteMeUserInfo" aria-expanded="false" aria-controls="aboteMeUserInfo">О себе</button>
+      <div class="collapse" id="aboteMeUserInfo">
+        <div class="card card-body">
+          <p>{{.User.AboutMe.String}}</p>
+        </div>
+      </div>{{end}}
     </div>
   </div>
   <div class="userInfo col-12 col-lg-6">
     <div class="settings">
-      <div class="dropdown">
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dropSettingsUser" aria-expanded="false" aria-controls="dropSettingsUser">Настройки</button>
-        <div class="collapse" id="dropSettingsUser">
+      <div class="dropdown row">
+        <button class="btn btn-primary col-11 col-md-10 col-lg-11" type="button" data-bs-toggle="collapse" data-bs-target="#dropSettingsUser" aria-expanded="false" aria-controls="dropSettingsUser">Настройки</button>
+        <div class="collapse col-11 col-md-10 col-lg-11" id="dropSettingsUser">
           <form method="POST" action="/user/updateSettings">
             <div class="card card-body"> 
               <div class="mb-2">
                 <label class="form-label" for="userAge">Возвраст</label>
-                <input class="form-control form-control-sm" id="userAge" name="userAge"/>
-              </div>{{if eq .User.Email.String ""}}
+                <input class="form-control form-control-sm" id="userAge" name="userAge" value="{{if gt .User.Age.Int32 0}}{{.User.Age.Int32}}{{end}}"/>
+              </div>
               <div class="mb-2">
                 <label class="form-label" for="userSite">Горад</label>
-                <input class="form-control form-control-sm" id="userSite" name="userSite"/>
+                <input class="form-control form-control-sm" id="userSite" name="userSite" value="{{.User.Site.String}}"/>
               </div>
-              <div class="mb-3">
+              <div class="mb-2">
                 <label class="form-label" for="userEmail">Email</label>
-                <input class="form-control form-control-sm" id="userEmail" name="userEmail"/>
-              </div>{{else}}
-              <div class="mb-3">
-                <label class="form-label" for="userSite">Горад</label>
-                <input class="form-control form-control-sm" id="userSite" name="userSite"/>
+                <input class="form-control form-control-sm" id="userEmail" name="userEmail" value="{{.User.Email.String}}"/>
               </div>
-              <input type="hidden" name="userEmail" value=""/>{{end}}
+              <div class="mb-1">{{if .User.PubEmail.Bool}}
+                <input class="form-check-input" type="checkbox" name="pubEmail" id="pubEmail" value="0"/>
+                <label class="form-check-label text-lowercase" for="pubEmail">Не публичный email <span class="form-text text-muted">(ваш email не будут видеть)</span></label>{{else}}
+                <input class="form-check-input" type="checkbox" name="pubEmail" id="pubEmail" value="1"/>
+                <label class="form-check-label text-lowercase" for="pubEmail">Публичный email <span class="form-text text-muted">(ваш email будут видеть все)</span></label>{{end}}
+              </div>
+              <hr/>
+              <div class="mb-3">
+                <label class="form-label" for="userEmail">О себе</label>
+                <textarea class="form-control form-control-sm" id="aboueMeTextarea" name="aboueMeTextarea" cols="30" rows="6">{{.User.AboutMe.String}}</textarea>
+              </div>
               <div>
                 <button class="btn btn-outline-success" type="submit">Сохнранить</button>
               </div>

@@ -5,38 +5,57 @@
 | {{define "content"}}
 |   {{if and .IsLogin .Access}}
 section.userProfil.row
-  div.userNameAndAvatar.col-12.col-lg-6
+  div.UserPubInfo.col-11.col-md-10.col-lg-5
     div.UserAvatarDiv
       img(src="/static/avatars/{{.User.Avatar}}" alt="аватарка" class="rounded-circle")
-    div.UserNameDiv
+    div.UserPubMainInfo
       h2 {{.User.Name}}
       | {{if ne .User.Age.Int32 0}}
-      span {{.User.Age.Int32}}
+      span Возвраст: 
+        span.age {{.User.Age.Int32}}
+      br
+      | {{end}}
+      | {{if .User.PubEmail.Bool}}
+      span.email {{.User.Email.String}}
+      br
+      | {{end}}
+      | {{if ne .User.AboutMe.String ""}}
+      button(class="btn btn-link btn-sm px-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboteMeUserInfo" aria-expanded="false" aria-controls="aboteMeUserInfo") О себе
+      div(id="aboteMeUserInfo" class="collapse")
+        div(class="card card-body")
+          p {{.User.AboutMe.String}}
       | {{end}}
 
   div.userInfo.col-12.col-lg-6
     div.settings
-      div.dropdown
-        button(class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dropSettingsUser" aria-expanded="false" aria-controls="dropSettingsUser") Настройки
-        div(class="collapse" id="dropSettingsUser")
+      div.dropdown.row
+        button(class="btn btn-primary col-11 col-md-10 col-lg-11" type="button" data-bs-toggle="collapse" data-bs-target="#dropSettingsUser" aria-expanded="false" aria-controls="dropSettingsUser") Настройки
+        div(class="collapse col-11 col-md-10 col-lg-11" id="dropSettingsUser")
           form(method="POST" action="/user/updateSettings")
             div(class="card card-body") 
               div.mb-2
                 label(for="userAge" class="form-label") Возвраст
-                input(id="userAge" name="userAge" class="form-control form-control-sm")
-              | {{if eq .User.Email.String ""}}
+                input(id="userAge" name="userAge" class="form-control form-control-sm" value="{{if gt .User.Age.Int32 0}}{{.User.Age.Int32}}{{end}}")
               div.mb-2
                 label(for="userSite" class="form-label") Горад
-                input(id="userSite" name="userSite" class="form-control form-control-sm")
-              div.mb-3
+                input(id="userSite" name="userSite" class="form-control form-control-sm" value="{{.User.Site.String}}")
+              div.mb-2
                 label(for="userEmail" class="form-label") Email
-                input(id="userEmail" name="userEmail" class="form-control form-control-sm")
-              | {{else}}
+                input(id="userEmail" name="userEmail" class="form-control form-control-sm" value="{{.User.Email.String}}")
+              div.mb-1
+                | {{if .User.PubEmail.Bool}}
+                input(type="checkbox" name="pubEmail" class="form-check-input" id="pubEmail" value="0")
+                label(for="pubEmail" class="form-check-label text-lowercase") Не публичный email 
+                  span.form-text.text-muted (ваш email не будут видеть)
+                | {{else}}
+                input(type="checkbox" name="pubEmail" class="form-check-input" id="pubEmail" value="1")
+                label(for="pubEmail" class="form-check-label text-lowercase") Публичный email 
+                  span.form-text.text-muted (ваш email будут видеть все)
+                | {{end}}
+              hr
               div.mb-3
-                label(for="userSite" class="form-label") Горад
-                input(id="userSite" name="userSite" class="form-control form-control-sm")
-              input(type="hidden" name="userEmail" value="")
-              | {{end}}
+                label(for="userEmail" class="form-label") О себе
+                textarea(id="aboueMeTextarea" name="aboueMeTextarea" cols="30" rows="6" class="form-control form-control-sm") {{.User.AboutMe.String}}
               div
                 button(type="submit" class="btn btn-outline-success") Сохнранить
 

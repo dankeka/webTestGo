@@ -1,0 +1,32 @@
+
+{{template "default" .}}
+{{define "title"}}Добавить товар{{end}}
+{{define "content"}}
+  {{ if .IsLogin}}
+<section class="addProduct col-11 col-md-10 col-lg-8 mx-auto">
+  <form action="/product/addPOST" method="post">
+    <h1>Добавить товар</h1>
+    <hr/>
+    <div class="mb-3">
+      <label class="form-label col-form-label" for="title">Заголовок</label>
+      <input class="form-control form-control-sm" id="title" name="title"/>
+    </div>
+    <div class="mb-3">
+      <label class="form-label col-form-label" for="section">Секция</label>
+      <select class="form-select form-select-sm" name="section" id="section">{{range $o := .Sections}}
+        <option value="{{$o.ID}}">{{$o.Title}}</option>{{end}}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label col-11 col-form-label" for="description">Описание</label>
+      <textarea class="form-control form-control-sm" id="description" name="description" cols="30" rows="10"> </textarea>
+    </div>
+    <div class="mb-3">
+      <input type="hidden" name="csrfToken" value="{{.Csrf}}" readonly="readonly"/>
+      <input type="hidden" name="userID" value="{{.UserId}}" readonly="readonly"/>
+      <button class="btn btn-primary" type="submit">Создать</button>
+    </div>
+  </form>
+</section>{{end}}
+{{end}}
+{{define "scripts"}}{{end}}

@@ -18,10 +18,11 @@ type User struct {
 	Site      sql.NullString `json:"site"`
 	AboutMe   sql.NullString `json:"about_me"`
 	Email     sql.NullString `json:"email"`
+	PubEmail  sql.NullBool   `json:"pub_email"`
 	// not password
 }
 
-type Announcement struct {
+type Product struct {
 	ID          int       `json:"id"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`

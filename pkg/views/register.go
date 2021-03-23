@@ -34,6 +34,7 @@ func RegisterTmpl(c *gin.Context) {
 
 	if errTmpl != nil {
 		httpErr(w, errTmpl, 404)
+		return
 	}
 
 	data := types.RegisterStruct{}
@@ -52,10 +53,20 @@ func RegisterTmpl(c *gin.Context) {
 	}
 	data.IsLogin = isLogin
 
+	csrfToken, errGenerateCsrf := CsrfGenerate(c)
+
+	if errGenerateCsrf != nil {
+		httpErr(w, errGenerateCsrf, 404)
+		return
+	}
+
+	data.Csrf = csrfToken
+
 	errRenderTmpl := tmpl.Execute(w, data)
 
 	if errRenderTmpl != nil {
 		httpErr(w, errRenderTmpl, 404)
+		return
 	}
 }
 
@@ -64,6 +75,14 @@ func RegisterTmpl(c *gin.Context) {
 func RegisterPost(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 	var r *http.Request = c.Request
+
+	csrfToken := r.FormValue("csrfToken")
+
+	chechCsrf := CheckCsrf(c, csrfToken)
+
+	if !chechCsrf {
+		http.Error(w, "ERROR", 404)
+	}
 
 	username := r.FormValue("name")
 

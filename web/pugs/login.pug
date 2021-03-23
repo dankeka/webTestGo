@@ -15,6 +15,7 @@ section.login
       div.col-md-8
         input(id="password" name="password" class="form-control form-control-sm")
     div.mb-3.row
+      input(type="hidden", name="csrfToken" value="{{.Csrf}}" readonly)
       button(type="submit" class="btn btn-primary") Войти
 | {{end}}
 

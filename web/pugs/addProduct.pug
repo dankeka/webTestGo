@@ -1,0 +1,30 @@
+| {{template "default" .}}
+
+| {{define "title"}}Добавить товар{{end}}
+
+| {{define "content"}}
+|   {{ if .IsLogin}}
+section.addProduct.col-11.col-md-10.col-lg-8.mx-auto
+  form(action="/product/addPOST", method="post")
+    h1 Добавить товар
+    hr
+    div.mb-3
+      label(for="title" class="form-label col-form-label") Заголовок
+      input(id="title" name="title" class="form-control form-control-sm")
+    div.mb-3
+      label(for="section" class="form-label col-form-label") Секция
+      select(class="form-select form-select-sm" name="section" id="section")
+        | {{range $o := .Sections}}
+        option(value="{{$o.ID}}") {{$o.Title}}
+        | {{end}}
+    div.mb-3
+      label(for="description" class="form-label col-11 col-form-label") Описание
+      textarea(id="description" name="description" cols="30" rows="10" class="form-control form-control-sm") 
+    div.mb-3
+      input(type="hidden", name="csrfToken" value="{{.Csrf}}" readonly)
+      input(type="hidden" name="userID" value="{{.UserId}}" readonly)
+      button(type="submit" class="btn btn-primary") Создать
+| {{end}}
+| {{end}}
+
+| {{define "scripts"}}{{end}}
