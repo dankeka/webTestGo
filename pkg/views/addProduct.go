@@ -106,6 +106,7 @@ func AddProductPost(c *gin.Context) {
 
 	if !chechCsrf {
 		http.Error(w, "ERROR", 404)
+		return
 	}
 
 	form, errForm := c.MultipartForm()
@@ -127,6 +128,7 @@ func AddProductPost(c *gin.Context) {
 
 	if errAtoi != nil {
 		httpErr(w, errAtoi, 404)
+		return
 	}
 
 	db, errConn := conn()
@@ -137,8 +139,10 @@ func AddProductPost(c *gin.Context) {
 	}
 
 	var fileNameList []string
+	var i int32 = 0
 
 	for _, file := range formData.Files {
+		fmt.Println(file.Filename)
 		row := db.QueryRow("SELECT MAX(id) FROM ImageProduct")
 		var maxIdImg sql.NullInt32
 
@@ -150,11 +154,9 @@ func AddProductPost(c *gin.Context) {
 			return
 		}
 
-		if maxIdImg.Int32 == 0 {
-			maxIdImg.Int32 = 1
-		} else {
-			maxIdImg.Int32 += 1
-		}
+		i++
+
+		maxIdImg.Int32 += i
 
 		fileName := fmt.Sprintf("product_img_%d", maxIdImg.Int32)
 
@@ -164,6 +166,7 @@ func AddProductPost(c *gin.Context) {
 		if errCreateFile != nil {
 			DeleteImages(fileNameList)
 			httpErr(w, errCreateFile, 404)
+			return
 		}
 
 		defer f.Close()
@@ -173,6 +176,7 @@ func AddProductPost(c *gin.Context) {
 		if errOpenFile != nil {
 			DeleteImages(fileNameList)
 			httpErr(w, errOpenFile, 404)
+			return
 		}
 
 		fileContent, errReadFile := ioutil.ReadAll(fo)
@@ -180,6 +184,7 @@ func AddProductPost(c *gin.Context) {
 		if errReadFile != nil {
 			DeleteImages(fileNameList)
 			httpErr(w, errReadFile, 404)
+			return
 		}
 
 		f.Write(fileContent)
@@ -192,11 +197,12 @@ func AddProductPost(c *gin.Context) {
 	if userId == 0 {
 		DeleteImages(fileNameList)
 		http.Error(w, "ERROR", 404)
+		return
 	}
 
 	dateNow := time.Now().UnixNano()
 
-	_, errExec := db.Exec(
+	res, errExec := db.Exec(
 		"INSERT INTO Product(title, description, price, section_id, user_id, active, date) VALUES ($1, $2, $3, $4, $5, 1, $6)",
 		formData.Title,
 		formData.Description,
@@ -209,5 +215,30 @@ func AddProductPost(c *gin.Context) {
 	if errExec != nil {
 		DeleteImages(fileNameList)
 		httpErr(w, errExec, 404)
+		return
 	}
+
+	lastProductId, errCheckLastId := res.LastInsertId()
+
+	if errCheckLastId != nil {
+		DeleteImages(fileNameList)
+		httpErr(w, errExec, 404)
+		return
+	}
+
+	for i := range fileNameList {
+		_, errExec = db.Exec(
+			"INSERT INTO ImageProduct(product_id, src) VALUES ($1, $2)",
+			lastProductId,
+			fileNameList[i],
+		)
+
+		if errExec != nil {
+			DeleteImages(fileNameList)
+			httpErr(w, errExec, 404)
+			return
+		}
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
