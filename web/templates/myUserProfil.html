@@ -49,6 +49,7 @@
                 <textarea class="form-control form-control-sm" id="aboueMeTextarea" name="aboueMeTextarea" cols="30" rows="6">{{.User.AboutMe.String}}</textarea>
               </div>
               <div>
+                <input type="hidden" name="csrf_token" value="{{.Csrf}}" readonly="readonly"/>
                 <button class="btn btn-outline-success" type="submit">Сохнранить</button>
               </div>
             </div>
@@ -58,10 +59,11 @@
     </div>
   </div>
 </section>  {{else}}
-<h1> 
-  <pre>У вас нету ака =( 
-<a href="/register/get">Создайте</a> акк или <a href="/login/get">войдите</a></pre>
-</h1>  {{end}}
+<h1> <span>
+    | У вас нету ака =( 
+    a(href="/register/get") Создайте акк
+    | или 
+    a(href="/login/get") войдите</span></h1>  {{end}}
 {{end}}
 {{define "scripts"}}
 {{end}}

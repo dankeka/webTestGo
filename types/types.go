@@ -1,5 +1,7 @@
 package types
 
+import "mime/multipart"
+
 type IndexData struct {
 	Sections []Section
 	IsLogin  bool
@@ -28,6 +30,7 @@ type MyUserProfilStruct struct {
 	Access    bool
 	IsLogin   bool
 	User			User
+	Csrf      string
 }
 
 type UpdateUserSettingsFormStruct struct {
@@ -43,4 +46,12 @@ type AddProductPageStruct struct {
 	IsLogin  bool
 	UserId   int
 	Csrf     string
+}
+
+type AddProductPost struct {
+	Title       string
+	SectionID   string
+	Description string
+	Files				[]*multipart.FileHeader
+	Price 			string
 }

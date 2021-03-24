@@ -62,6 +62,15 @@ func MyUserProfil(c *gin.Context) {
 		return
 	}
 
+	csrfToken, errgenerateCsrf := CsrfGenerate(c)
+
+	if errgenerateCsrf != nil {
+		httpErr(w, errgenerateCsrf, 404)
+		return
+	}
+
+	data.Csrf = csrfToken
+
 	tmpl, errTmpl := template.ParseFiles("web/templates/myUserProfil.html", "web/templates/default.html")
 
 	if errTmpl != nil {
@@ -79,6 +88,13 @@ func MyUserProfil(c *gin.Context) {
 func UpdateUserSettings(c *gin.Context) {
 	var r *http.Request = c.Request
 	var w http.ResponseWriter = c.Writer
+
+	csrfToken := r.FormValue("csrf_token")
+	checkCsrf := CheckCsrf(c, csrfToken)
+
+	if !checkCsrf {
+		http.Error(w, "ERROR", 404)
+	}
 
 	checkUserLogin := CheckLoginUser(c)
 	userId := SessionUserId(c)

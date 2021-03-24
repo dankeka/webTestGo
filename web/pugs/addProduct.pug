@@ -5,7 +5,7 @@
 | {{define "content"}}
 |   {{ if .IsLogin}}
 section.addProduct.col-11.col-md-10.col-lg-8.mx-auto
-  form(action="/product/addPOST", method="post")
+  form(action="/product/addPOST" method="post" enctype="multipart/form-data")
     h1 Добавить товар
     hr
     div.mb-3
@@ -20,6 +20,12 @@ section.addProduct.col-11.col-md-10.col-lg-8.mx-auto
     div.mb-3
       label(for="description" class="form-label col-11 col-form-label") Описание
       textarea(id="description" name="description" cols="30" rows="10" class="form-control form-control-sm") 
+    div.mb-3
+      label(for="addImg" class="form-label") Прикрепить изображение
+      input(class="form-control form-control-sm" id="addImg" name="addImg" type="file" multiple)
+    div.mb-3
+      label(for="priceProduct" class="form-label col-11 col-form-label") Цена
+      input(id="priceProduct" name="priceProduct" class="form-control form-control-sm")
     div.mb-3
       input(type="hidden", name="csrfToken" value="{{.Csrf}}" readonly)
       input(type="hidden" name="userID" value="{{.UserId}}" readonly)

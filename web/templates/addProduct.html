@@ -4,7 +4,7 @@
 {{define "content"}}
   {{ if .IsLogin}}
 <section class="addProduct col-11 col-md-10 col-lg-8 mx-auto">
-  <form action="/product/addPOST" method="post">
+  <form action="/product/addPOST" method="post" enctype="multipart/form-data">
     <h1>Добавить товар</h1>
     <hr/>
     <div class="mb-3">
@@ -20,6 +20,14 @@
     <div class="mb-3">
       <label class="form-label col-11 col-form-label" for="description">Описание</label>
       <textarea class="form-control form-control-sm" id="description" name="description" cols="30" rows="10"> </textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="addImg">Прикрепить изображение</label>
+      <input class="form-control form-control-sm" id="addImg" name="addImg" type="file" multiple="multiple"/>
+    </div>
+    <div class="mb-3">
+      <label class="form-label col-11 col-form-label" for="priceProduct">Цена</label>
+      <input class="form-control form-control-sm" id="priceProduct" name="priceProduct"/>
     </div>
     <div class="mb-3">
       <input type="hidden" name="csrfToken" value="{{.Csrf}}" readonly="readonly"/>

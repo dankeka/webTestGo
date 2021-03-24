@@ -57,13 +57,15 @@ section.userProfil.row
                 label(for="userEmail" class="form-label") О себе
                 textarea(id="aboueMeTextarea" name="aboueMeTextarea" cols="30" rows="6" class="form-control form-control-sm") {{.User.AboutMe.String}}
               div
+                input(type="hidden", name="csrf_token" value="{{.Csrf}}" readonly)
                 button(type="submit" class="btn btn-outline-success") Сохнранить
-
 |   {{else}}
 h1 
-  pre. 
-    У вас нету ака =( 
-    <a href="/register/get">Создайте</a> акк или <a href="/login/get">войдите</a>
+  span. 
+    | У вас нету ака =( 
+    a(href="/register/get") Создайте акк
+    | или 
+    a(href="/login/get") войдите
 |   {{end}}
 | {{end}}
 

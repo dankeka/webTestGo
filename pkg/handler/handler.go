@@ -43,6 +43,7 @@ func (h *Handler) InitRouters() *gin.Engine {
 	product := r.Group("/product")
 	{
 		product.GET("/addPage", views.AddProductGet)
+		product.POST("/addPOST", views.AddProductPost)
 	}
 
 	fs := http.Dir("./web/static")
