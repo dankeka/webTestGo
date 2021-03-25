@@ -1,0 +1,27 @@
+| {{template "default" .}}
+
+| {{define "title"}}Мои товары{{end}}
+
+| {{define "content"}}
+| {{if .IsLogin}}
+section.myProducts.row.mx-auto
+  | {{range $p := .Products}}
+  div(class="product row col-11 col-md-6 col-xs-3")
+    div.mx-auto.row.container-fluid.p-0
+      img(src="/static/images/{{$p.ImgUrl}}" class="col-12 p-0" alt="фото товара")
+      div(class="productInfo col-12")
+        h2.title {{$p.Title}}
+        span.price {{$p.Price}}&#8381;
+  //- div(class="product row mx-auto col-11 col-md-5 col-xs-3")
+  //-   div.mx-auto.row
+  //-     img(src="/static/images/{{$p.ImgUrl}}" class="mx-auto col-10 col-sm-8 col-md-12 col-lg-10 col-xs-10 col-xxs-8" alt="фото товара")
+  //-     div(class="productInfo mx-auto col-10 col-sm-8 col-md-12 col-lg-10 col-xs-10 col-xxs-8")
+  //-       h2.title {{$p.Title}}
+  //-       span.price {{$p.Price}}&#8381;
+  | {{else}}
+  h1 Пусто =(
+  | {{end}}
+| {{end}}
+| {{end}}
+
+| {{define "scripts"}}{{end}}

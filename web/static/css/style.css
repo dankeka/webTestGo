@@ -50,6 +50,18 @@ main {
       bottom: 1px;
       font-size: 1em; }
 
+.myProducts .product {
+  height: 400px; }
+  .myProducts .product > div {
+    box-shadow: 1px 2px 4px 2px #888; }
+    .myProducts .product > div img {
+      margin-bottom: 5px;
+      height: auto; }
+    .myProducts .product > div .productInfo .title {
+      font-size: 2em; }
+    .myProducts .product > div .productInfo .price {
+      font-size: 1.3em; }
+
 @media screen and (max-width: 992px) {
   header {
     padding: 0 10px 10px 10px; }
@@ -64,7 +76,12 @@ main {
     margin-left: auto;
     margin-right: auto; }
   .userProfil .userInfo button[aria-controls="dropSettingsUser"] {
-    margin-top: 10px; } }
+    margin-top: 10px; }
+
+  .myProducts .product {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px; } }
 @media screen and (min-width: 992px) {
   .navbar-brand {
     margin-left: 8px; }
@@ -90,6 +107,9 @@ main {
     flex-wrap: nowrap; }
 
   .navbar-container .navbar-nav {
-    flex-direction: column !important; } }
+    flex-direction: column !important; }
+
+  .myProducts .product:nth-child(odd) {
+    margin-right: 10px; } }
 
 /*# sourceMappingURL=style.css.map */

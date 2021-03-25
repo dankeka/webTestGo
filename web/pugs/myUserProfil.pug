@@ -58,7 +58,10 @@ section.userProfil.row
                 textarea(id="aboueMeTextarea" name="aboueMeTextarea" cols="30" rows="6" class="form-control form-control-sm") {{.User.AboutMe.String}}
               div
                 input(type="hidden", name="csrf_token" value="{{.Csrf}}" readonly)
-                button(type="submit" class="btn btn-outline-success") Сохнранить
+                button(type="submit" class="btn btn-outline-primary") Сохнранить
+        a(class="btn btn-outline-info col-11 col-md-10 col-lg-11 mx-auto mt-2" role="button" href="/product/addPage") Добавить товар
+        a(class="btn btn-outline-warning col-11 col-md-10 col-lg-11 mx-auto mt-2" role="button" href="/product/my") Мои товары
+          
 |   {{else}}
 h1 
   span. 

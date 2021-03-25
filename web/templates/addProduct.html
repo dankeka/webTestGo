@@ -19,7 +19,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label col-11 col-form-label" for="description">Описание</label>
-      <textarea class="form-control form-control-sm" id="description" name="description" cols="30" rows="10"> </textarea>
+      <textarea class="form-control form-control-sm" id="description" name="description" cols="30" rows="10"></textarea>
     </div>
     <div class="mb-3">
       <label class="form-label" for="addImg">Прикрепить изображение</label>
@@ -27,7 +27,9 @@
     </div>
     <div class="mb-3">
       <label class="form-label col-11 col-form-label" for="priceProduct">Цена</label>
-      <input class="form-control form-control-sm" id="priceProduct" name="priceProduct"/>
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-sm" id="priceProduct" name="priceProduct"/><span class="input-group-text">&#8381;</span>
+      </div>
     </div>
     <div class="mb-3">
       <input type="hidden" name="csrfToken" value="{{.Csrf}}" readonly="readonly"/>

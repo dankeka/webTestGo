@@ -30,4 +30,5 @@ type Product struct {
 	SectionID   int       `json:"section_id"`
 	UserID      int       `json:"user_id"`
 	Date        time.Time `json:"date"`
+	Price       int       `json:"price"`
 }

@@ -55,3 +55,13 @@ type AddProductPost struct {
 	Files				[]*multipart.FileHeader
 	Price 			string
 }
+
+type ProductAndImg struct {
+	Product
+	ImgUrl string
+}
+
+type MyProductsStruct struct {
+	IsLogin  bool
+	Products []ProductAndImg
+}
