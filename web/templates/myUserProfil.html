@@ -5,7 +5,27 @@
   {{if and .IsLogin .Access}}
 <section class="userProfil row">
   <div class="UserPubInfo col-11 col-md-10 col-lg-5">
-    <div class="UserAvatarDiv"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" alt="аватарка"/></div>
+    <div class="UserAvatarDiv"><a data-bs-toggle="modal" data-bs-target="#userAvaModal"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" alt="аватарка"/></a>
+      <div class="modal fade" id="userAvaModal" tabindex="-1" aria-labelledby="userAvaModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Изменить аву</h5>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/user/updateAva" method="post" enctype="multipart/form-data">
+              <div class="modal-body">
+                <input class="form-control form-control-sm" id="newAva" name="newAva" type="file"/>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Закрыть</button>
+                <button class="btn btn-primary" type="submit">Сохранить</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="UserPubMainInfo">
       <h2>{{.User.Name}}</h2>{{if ne .User.Age.Int32 0}}<span>Возвраст: <span class="age">{{.User.Age.Int32}}</span></span><br/>{{end}}
       {{if .User.PubEmail.Bool}}<span class="email">{{.User.Email.String}}</span><br/>{{end}}

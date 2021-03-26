@@ -7,7 +7,20 @@
 section.userProfil.row
   div.UserPubInfo.col-11.col-md-10.col-lg-5
     div.UserAvatarDiv
-      img(src="/static/avatars/{{.User.Avatar}}" alt="аватарка" class="rounded-circle")
+      a(data-bs-toggle="modal" data-bs-target="#userAvaModal")
+        img(src="/static/avatars/{{.User.Avatar}}" alt="аватарка" class="rounded-circle")
+      div(class="modal fade" id="userAvaModal" tabindex="-1" aria-labelledby="userAvaModal" aria-hidden="true")
+        div(class="modal-dialog")
+          div(class="modal-content")
+            div(class="modal-header")
+              h5(class="modal-title" id="exampleModalLabel") Изменить аву
+              button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+            form(action="/user/updateAva" method="post" enctype="multipart/form-data")
+              .modal-body
+                  input(class="form-control form-control-sm" id="newAva" name="newAva" type="file")
+              div(class="modal-footer")
+                button(type="button" class="btn btn-secondary" data-bs-dismiss="modal") Закрыть
+                button(type="submit" class="btn btn-primary") Сохранить
     div.UserPubMainInfo
       h2 {{.User.Name}}
       | {{if ne .User.Age.Int32 0}}
