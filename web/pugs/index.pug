@@ -3,7 +3,21 @@
 | {{define "title"}}Главное{{end}}
 
 | {{define "content"}}
-h1 Hello world
+|   {{if .IsLogin}}
+section.Main.row.mx-auto
+  h2.display-5 Главное
+  | {{range $p := .NewProducts}}
+  div(class="product row col-11 col-md-6 col-xs-3")
+    div.mx-auto.row.container-fluid.p-0
+      img(src="/static/images/{{$p.ImgUrl}}" class="col-12 p-0" alt="фото товара")
+      div(class="productInfo col-12")
+        h2.title 
+          a(href="/product/i/{{$p.ID}}" class="link-dark text-decoration-none") {{$p.Title}}
+        span.price {{$p.Price}}&#8381;
+  | {{else}}
+  span.display-5 тут пусто :(
+  | {{end}}
+|   {{end}}
 | {{end}}
 
 | {{define "scripts"}}{{end}}

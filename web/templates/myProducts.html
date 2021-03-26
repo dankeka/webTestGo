@@ -8,6 +8,7 @@
     <div class="mx-auto row container-fluid p-0"><img class="col-12 p-0" src="/static/images/{{$p.ImgUrl}}" alt="фото товара"/>
       <div class="productInfo col-12">
         <h2 class="title"> <a class="link-dark text-decoration-none" href="/product/i/{{$p.ID}}">{{$p.Title}}</a></h2><span class="price">{{$p.Price}}&#8381;</span>
+        <p>{{$p.DateStr}}</p>
       </div>
     </div>
   </div>{{else}}

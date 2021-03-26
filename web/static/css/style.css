@@ -1,6 +1,18 @@
 main {
   padding-top: 10px; }
 
+.Main .product {
+  height: 400px; }
+  .Main .product > div {
+    box-shadow: 1px 2px 4px 2px #888; }
+    .Main .product > div img {
+      margin-bottom: 5px;
+      height: auto; }
+    .Main .product > div .productInfo .title {
+      font-size: 2em; }
+    .Main .product > div .productInfo .price {
+      font-size: 1.3em; }
+
 .register .registerForm {
   width: 90%;
   margin: 0 auto;
@@ -103,7 +115,7 @@ main {
   .userProfil .userInfo button[aria-controls="dropSettingsUser"] {
     margin-top: 10px; }
 
-  .myProducts .product {
+  .myProducts .product, .Main .product {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px; } }
@@ -134,7 +146,7 @@ main {
   .navbar-container .navbar-nav {
     flex-direction: column !important; }
 
-  .myProducts .product:nth-child(odd) {
-    margin-right: 10px; } }
+  .myProducts .product, .Main .product {
+    margin-right: 9px; } }
 
 /*# sourceMappingURL=style.css.map */

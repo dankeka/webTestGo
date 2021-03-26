@@ -4,6 +4,7 @@ import "mime/multipart"
 
 type IndexData struct {
 	Sections []Section
+	NewProducts []ProductIdAndTitleAndImg
 	IsLogin  bool
 }
 

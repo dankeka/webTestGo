@@ -2,5 +2,16 @@
 {{template "default" .}}
 {{define "title"}}Главное{{end}}
 {{define "content"}}
-<h1>Hello world</h1>{{end}}
+  {{if .IsLogin}}
+<section class="Main row mx-auto">
+  <h2 class="display-5">Главное</h2>{{range $p := .NewProducts}}
+  <div class="product row col-11 col-md-6 col-xs-3">
+    <div class="mx-auto row container-fluid p-0"><img class="col-12 p-0" src="/static/images/{{$p.ImgUrl}}" alt="фото товара"/>
+      <div class="productInfo col-12">
+        <h2 class="title"> <a class="link-dark text-decoration-none" href="/product/i/{{$p.ID}}">{{$p.Title}}</a></h2><span class="price">{{$p.Price}}&#8381;</span>
+      </div>
+    </div>
+  </div>{{else}}<span class="display-5">тут пусто :(</span>{{end}}
+</section>  {{end}}
+{{end}}
 {{define "scripts"}}{{end}}

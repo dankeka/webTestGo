@@ -45,6 +45,8 @@ func MyProducts(c *gin.Context) {
 			&p.Product.Active, &p.Product.SectionID, &p.Product.UserID, 
 			&p.Product.Date, &p.Product.Price,
 		)
+		
+		p.Product.DateStr = p.Product.Date.Format("2006-01-02 15:04")
 
 		if errScan != nil {
 			httpErr(w, errScan, 404)
