@@ -1,0 +1,32 @@
+
+{{template "default" .}}
+{{define "title"}}{{.Product.Title}}{{end}}
+{{define "content"}}
+  {{if .IsLogin}}
+<section class="product">
+  <div class="ProductInfo">{{if .ImgUrls}}
+    <div class="carousel slide" id="productImgCarousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+         {{range $i := .ImgUrls}}
+        <div class="carousel-item bg-light"><img class="d-block mx-auto h-100" src="/static/images/{{$i}}" alt="фото товара"/></div>{{end}}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#productImgCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+      <button class="carousel-control-next" type="button" data-bs-target="#productImgCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+    </div>{{end}}
+    <div class="MainInfo">
+      <h1 class="title">{{.Product.Title}}</h1>
+      <p class="description border bg-light">{{.Product.Description}}</p><span class="display-5 price">Цена: {{.Product.Price}} &#8381;</span>
+    </div>
+  </div>
+</section>  {{end}}
+{{end}}
+{{define "scripts"}}
+<script>
+  try {
+    let carousel = document.querySelector("#productImgCarousel > .carousel-inner > .carousel-item:first-child");
+  
+    carousel.classList.add("active");
+  } catch(err) {
+    console.log(err);
+  }
+</script>{{end}}       

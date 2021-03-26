@@ -61,6 +61,12 @@ type ProductAndImg struct {
 	ImgUrl string
 }
 
+type OpenProductStruct struct {
+	Product
+	ImgUrls []string
+	IsLogin bool
+}
+
 type MyProductsStruct struct {
 	IsLogin  bool
 	Products []ProductAndImg

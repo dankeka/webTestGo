@@ -1,0 +1,39 @@
+| {{template "default" .}}
+
+| {{define "title"}}{{.Product.Title}}{{end}}
+
+| {{define "content"}}
+|   {{if .IsLogin}}
+section.product
+  div.ProductInfo
+    | {{if .ImgUrls}}
+    div(class="carousel slide" id="productImgCarousel" data-bs-ride="carousel")
+      div(class="carousel-inner") 
+        | {{range $i := .ImgUrls}}
+        div(class="carousel-item bg-light")
+          img(src="/static/images/{{$i}}" class="d-block mx-auto h-100" alt="фото товара")
+        | {{end}}
+      button(class="carousel-control-prev" type="button" data-bs-target="#productImgCarousel" data-bs-slide="prev")
+        span(class="carousel-control-prev-icon" aria-hidden="true")
+        span(class="visually-hidden") Previous
+      button(class="carousel-control-next" type="button" data-bs-target="#productImgCarousel" data-bs-slide="next")
+        span(class="carousel-control-next-icon" aria-hidden="true")
+        span(class="visually-hidden") Next
+    | {{end}}
+    div.MainInfo
+      h1.title {{.Product.Title}}
+      p.description.border.bg-light {{.Product.Description}}
+      span.display-5.price Цена: {{.Product.Price}} &#8381;
+|   {{end}}
+| {{end}}
+
+| {{define "scripts"}}
+script.
+  try {
+    let carousel = document.querySelector("#productImgCarousel > .carousel-inner > .carousel-item:first-child");
+
+    carousel.classList.add("active");
+  } catch(err) {
+    console.log(err);
+  }
+|{{end}}       

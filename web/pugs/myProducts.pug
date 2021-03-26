@@ -10,7 +10,8 @@ section.myProducts.row.mx-auto
     div.mx-auto.row.container-fluid.p-0
       img(src="/static/images/{{$p.ImgUrl}}" class="col-12 p-0" alt="фото товара")
       div(class="productInfo col-12")
-        h2.title {{$p.Title}}
+        h2.title 
+          a(href="/product/i/{{$p.ID}}" class="link-dark text-decoration-none") {{$p.Title}}
         span.price {{$p.Price}}&#8381;
   //- div(class="product row mx-auto col-11 col-md-5 col-xs-3")
   //-   div.mx-auto.row

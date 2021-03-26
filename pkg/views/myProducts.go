@@ -43,7 +43,7 @@ func MyProducts(c *gin.Context) {
 		errScan := rows.Scan(
 			&p.Product.ID, &p.Product.Title, &p.Product.Description, 
 			&p.Product.Active, &p.Product.SectionID, &p.Product.UserID, 
-			&p.Date, &p.Price,
+			&p.Product.Date, &p.Product.Price,
 		)
 
 		if errScan != nil {

@@ -45,6 +45,7 @@ func (h *Handler) InitRouters() *gin.Engine {
 		product.GET("/addPage", views.AddProductGet)
 		product.POST("/addPOST", views.AddProductPost)
 		product.GET("/my", views.MyProducts)
+		product.GET("/i/:id", views.OpenProduct)
 	}
 
 	fs := http.Dir("./web/static")
