@@ -129,6 +129,20 @@ main
       .price
         padding: 0 7px
 
+.userAcc
+  .product
+    height: 400px
+    > div
+      box-shadow: 1px 2px 4px 2px #888
+      img
+        margin-bottom: 5px
+        height: auto
+      .productInfo
+        .title
+          font-size: 2em
+        .price
+          font-size: 1.3em
+
 @media screen and (max-width: 992px) 
   header
     padding: 0 10px 10px 10px
@@ -149,7 +163,7 @@ main
       button[aria-controls="dropSettingsUser"]
         margin-top: 10px
   
-  .myProducts, .Main
+  .myProducts, .Main, .userAcc
     .product
       margin-left: auto
       margin-right: auto
@@ -182,6 +196,6 @@ main
   .navbar-container .navbar-nav 
     flex-direction: column !important
       
-  .myProducts, .Main
+  .myProducts, .Main, .userAcc
     .product
       margin-right: 9px

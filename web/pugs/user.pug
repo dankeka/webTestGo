@@ -26,6 +26,19 @@ section.userAcc.row
       | {{end}}
   div.col-12.col-lg-6.row
     a(tabindex="-1" role="button" aria-disabled="true" class="btn btn-primary col-11 mx-auto" style="height: 39px" href="#") Сообщения
+  div.col-12.row.px-3.mx-auto
+    h2.px-2 Последние объявления
+    | {{range $p := .LastProducts}}
+    div(class="product row col-11 col-md-6 col-xs-3")
+      div.mx-auto.row.container-fluid.p-0
+        img(src="/static/images/{{$p.ImgUrl}}" class="col-12 p-0" alt="фото товара")
+        div(class="productInfo col-12")
+          h2.title 
+            a(href="/product/i/{{$p.ID}}" class="link-dark text-decoration-none") {{$p.Title}}
+          span.price {{$p.Price}}&#8381;
+    | {{else}}
+    span.display-5 тут пусто :(
+    | {{end}}
 | {{end}}
 
 | {{define "scripts"}}{{end}}

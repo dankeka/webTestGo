@@ -18,5 +18,15 @@
     </div>
   </div>
   <div class="col-12 col-lg-6 row"><a class="btn btn-primary col-11 mx-auto" tabindex="-1" role="button" aria-disabled="true" style="height: 39px" href="#">Сообщения</a></div>
+  <div class="col-12 row px-3 mx-auto">
+    <h2 class="px-2">Последние объявления</h2>{{range $p := .LastProducts}}
+    <div class="product row col-11 col-md-6 col-xs-3">
+      <div class="mx-auto row container-fluid p-0"><img class="col-12 p-0" src="/static/images/{{$p.ImgUrl}}" alt="фото товара"/>
+        <div class="productInfo col-12">
+          <h2 class="title"> <a class="link-dark text-decoration-none" href="/product/i/{{$p.ID}}">{{$p.Title}}</a></h2><span class="price">{{$p.Price}}&#8381;</span>
+        </div>
+      </div>
+    </div>{{else}}<span class="display-5">тут пусто :(</span>{{end}}
+  </div>
 </section>{{end}}
 {{define "scripts"}}{{end}}

@@ -82,4 +82,5 @@ type UserAvaAndName struct {
 type OpenUserAccStruct struct {
 	IsLogin bool
 	User    User
+	LastProducts []ProductIdAndTitleAndImg
 }

@@ -52,6 +52,43 @@ func OpenUser(c *gin.Context) {
 
 	data.User = user
 
+	rows, errQuery := db.Query(
+		"SELECT id, title, price FROM Product WHERE user_id=$1",
+		userId,
+	)
+
+	if errQuery != nil {
+		httpErr(w, errQuery, 404)
+		return
+	}
+
+	defer rows.Close()
+
+	var products []types.ProductIdAndTitleAndImg
+
+	for rows.Next() {
+		var p types.ProductIdAndTitleAndImg
+
+		if errScan = rows.Scan(&p.ID, &p.Title, &p.Price); errScan != nil {
+			httpErr(w, errScan, 404)
+			return
+		}
+
+		row = db.QueryRow(
+			"SELECT src FROM ImageProduct WHERE id=(SELECT MIN(id) FROM ImageProduct WHERE product_id=$1)",
+			p.ID,
+		)
+
+		if errScan = row.Scan(&p.ImgUrl); errScan != nil {
+			httpErr(w, errScan, 404)
+			return
+		}
+
+		products = append(products, p)
+	}
+
+	data.LastProducts = products
+
 	tmpl, errTmpl := template.ParseFiles("web/templates/user.html", "web/templates/default.html")
 
 	if errTmpl != nil {
