@@ -15,7 +15,13 @@
     </div>{{end}}
     <div class="MainInfo">
       <h1 class="title">{{.Product.Title}}</h1>
-      <p class="description border bg-light">{{.Product.Description}}</p><span class="display-5 price">Цена: {{.Product.Price}} &#8381;</span>
+      <div class="border bg-light">
+        <div class="d-flex sellerInfo">
+          <div class="sellerAva"><img class="rounded-circle sellerAvatar" src="/static/avatars/{{.SellerInfo.AvaUrl}}" alt="seller_avater"/></div>
+          <h3 class="fw-bolder sellerName">{{.SellerInfo.Name}}</h3>
+        </div>
+        <p class="description">{{.Product.Description}}</p>
+      </div><span class="display-5 price">Цена: {{.Product.Price}} &#8381;</span>
     </div>
   </div>
 </section>  {{end}}

@@ -5,7 +5,7 @@
   {{if and .IsLogin .Access}}
 <section class="userProfil row">
   <div class="UserPubInfo col-11 col-md-10 col-lg-5">
-    <div class="UserAvatarDiv"><a data-bs-toggle="modal" data-bs-target="#userAvaModal"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" alt="аватарка"/></a>
+    <div class="UserAvatarDiv"><a data-bs-toggle="modal" data-bs-target="#userAvaModal"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" style="width: 195px !important; height: 195px !important;" alt="аватарка"/></a>
       <div class="modal fade" id="userAvaModal" tabindex="-1" aria-labelledby="userAvaModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -15,6 +15,7 @@
             </div>
             <form action="/user/updateAva" method="post" enctype="multipart/form-data">
               <div class="modal-body">
+                <input type="hidden" name="csrf_token" value="{{.Csrf}}" readonly="readonly"/>
                 <input class="form-control form-control-sm" id="newAva" name="newAva" type="file"/>
               </div>
               <div class="modal-footer">
@@ -31,7 +32,7 @@
       {{if .User.PubEmail.Bool}}<span class="email">{{.User.Email.String}}</span><br/>{{end}}
       {{if ne .User.AboutMe.String ""}}
       <button class="btn btn-link btn-sm px-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboteMeUserInfo" aria-expanded="false" aria-controls="aboteMeUserInfo">О себе</button>
-      <div class="collapse" id="aboteMeUserInfo">
+      <div class="collapse" id="aboteMeUserInfo" style="position: absolute; z-index: 2;">
         <div class="card card-body">
           <p>{{.User.AboutMe.String}}</p>
         </div>
@@ -51,7 +52,7 @@
               </div>
               <div class="mb-2">
                 <label class="form-label" for="userSite">Горад</label>
-                <input class="form-control form-control-sm" id="userSite" name="userSite" value="{{.User.Site.String}}"/>
+                <input class="form-control form-control-sm" id="userSite" name="userSite" value="{{.User.Cite.String}}"/>
               </div>
               <div class="mb-2">
                 <label class="form-label" for="userEmail">Email</label>

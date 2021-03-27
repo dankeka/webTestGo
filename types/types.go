@@ -64,11 +64,22 @@ type ProductAndImg struct {
 
 type OpenProductStruct struct {
 	Product
-	ImgUrls []string
-	IsLogin bool
+	SellerInfo UserAvaAndName
+	ImgUrls    []string
+	IsLogin    bool
 }
 
 type MyProductsStruct struct {
 	IsLogin  bool
 	Products []ProductAndImg
+}
+
+type UserAvaAndName struct {
+	Name   string
+	AvaUrl string
+}
+
+type OpenUserAccStruct struct {
+	IsLogin bool
+	User    User
 }

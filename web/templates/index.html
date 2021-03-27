@@ -2,7 +2,6 @@
 {{template "default" .}}
 {{define "title"}}Главное{{end}}
 {{define "content"}}
-  {{if .IsLogin}}
 <section class="Main row mx-auto">
   <h2 class="display-5">Главное</h2>{{range $p := .NewProducts}}
   <div class="product row col-11 col-md-6 col-xs-3">
@@ -12,6 +11,5 @@
       </div>
     </div>
   </div>{{else}}<span class="display-5">тут пусто :(</span>{{end}}
-</section>  {{end}}
-{{end}}
+</section>{{end}}
 {{define "scripts"}}{{end}}

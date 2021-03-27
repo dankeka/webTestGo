@@ -3,7 +3,6 @@
 | {{define "title"}}Главное{{end}}
 
 | {{define "content"}}
-|   {{if .IsLogin}}
 section.Main.row.mx-auto
   h2.display-5 Главное
   | {{range $p := .NewProducts}}
@@ -17,7 +16,6 @@ section.Main.row.mx-auto
   | {{else}}
   span.display-5 тут пусто :(
   | {{end}}
-|   {{end}}
 | {{end}}
 
 | {{define "scripts"}}{{end}}

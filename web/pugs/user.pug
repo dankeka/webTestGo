@@ -1,0 +1,31 @@
+| {{template "default" .}}
+
+| {{define "title"}}{{.User.Name}}{{end}}
+
+| {{define "content"}}
+section.userAcc.row
+  div.UserPubInfo.col-11.col-md-10.col-lg-5.px-3.d-flex.mb-3
+    div.UserAvatarDiv
+      img(src="/static/avatars/{{.User.Avatar}}" style="width: 195px !important; height: 195px !important;" alt="аватарка" class="rounded-circle")
+    div.UserPubMainInfo(style="margin-left: 20px;")
+      h2 {{.User.Name}}
+      | {{if ne .User.Age.Int32 0}}
+      span Возвраст: 
+        span.age {{.User.Age.Int32}}
+      br
+      | {{end}}
+      | {{if .User.PubEmail.Bool}}
+      span.email {{.User.Email.String}}
+      br
+      | {{end}}
+      | {{if ne .User.AboutMe.String ""}}
+      button(class="btn btn-link btn-sm px-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboteMeUserInfo" aria-expanded="false" aria-controls="aboteMeUserInfo") О себе
+      div(id="aboteMeUserInfo" class="collapse" style="position: absolute; z-index: 2;")
+        div(class="card card-body")
+          p {{.User.AboutMe.String}}
+      | {{end}}
+  div.col-12.col-lg-6.row
+    a(tabindex="-1" role="button" aria-disabled="true" class="btn btn-primary col-11 mx-auto" style="height: 39px" href="#") Сообщения
+| {{end}}
+
+| {{define "scripts"}}{{end}}

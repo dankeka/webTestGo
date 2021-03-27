@@ -14,6 +14,13 @@ func UpdateAva(c *gin.Context) {
 	var r *http.Request = c.Request
 	var w http.ResponseWriter = c.Writer
 
+	csrfToken := r.FormValue("csrf_token")
+	checkCsrf := CheckCsrf(c, csrfToken)
+
+	if !checkCsrf {
+		http.Error(w, "ERROR", 404)
+	}
+
 	userId :=	SessionUserId(c)
 
 	if userId == 0 {

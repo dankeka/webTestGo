@@ -8,7 +8,7 @@ section.userProfil.row
   div.UserPubInfo.col-11.col-md-10.col-lg-5
     div.UserAvatarDiv
       a(data-bs-toggle="modal" data-bs-target="#userAvaModal")
-        img(src="/static/avatars/{{.User.Avatar}}" alt="аватарка" class="rounded-circle")
+        img(src="/static/avatars/{{.User.Avatar}}" style="width: 195px !important; height: 195px !important;" alt="аватарка" class="rounded-circle")
       div(class="modal fade" id="userAvaModal" tabindex="-1" aria-labelledby="userAvaModal" aria-hidden="true")
         div(class="modal-dialog")
           div(class="modal-content")
@@ -17,6 +17,7 @@ section.userProfil.row
               button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
             form(action="/user/updateAva" method="post" enctype="multipart/form-data")
               .modal-body
+                  input(type="hidden", name="csrf_token" value="{{.Csrf}}" readonly)
                   input(class="form-control form-control-sm" id="newAva" name="newAva" type="file")
               div(class="modal-footer")
                 button(type="button" class="btn btn-secondary" data-bs-dismiss="modal") Закрыть
@@ -34,7 +35,7 @@ section.userProfil.row
       | {{end}}
       | {{if ne .User.AboutMe.String ""}}
       button(class="btn btn-link btn-sm px-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboteMeUserInfo" aria-expanded="false" aria-controls="aboteMeUserInfo") О себе
-      div(id="aboteMeUserInfo" class="collapse")
+      div(id="aboteMeUserInfo" class="collapse" style="position: absolute; z-index: 2;")
         div(class="card card-body")
           p {{.User.AboutMe.String}}
       | {{end}}
@@ -51,7 +52,7 @@ section.userProfil.row
                 input(id="userAge" name="userAge" class="form-control form-control-sm" value="{{if gt .User.Age.Int32 0}}{{.User.Age.Int32}}{{end}}")
               div.mb-2
                 label(for="userSite" class="form-label") Горад
-                input(id="userSite" name="userSite" class="form-control form-control-sm" value="{{.User.Site.String}}")
+                input(id="userSite" name="userSite" class="form-control form-control-sm" value="{{.User.Cite.String}}")
               div.mb-2
                 label(for="userEmail" class="form-label") Email
                 input(id="userEmail" name="userEmail" class="form-control form-control-sm" value="{{.User.Email.String}}")

@@ -1,0 +1,22 @@
+
+{{template "default" .}}
+{{define "title"}}{{.User.Name}}{{end}}
+{{define "content"}}
+<section class="userAcc row">
+  <div class="UserPubInfo col-11 col-md-10 col-lg-5 px-3 d-flex mb-3">
+    <div class="UserAvatarDiv"><img class="rounded-circle" src="/static/avatars/{{.User.Avatar}}" style="width: 195px !important; height: 195px !important;" alt="аватарка"/></div>
+    <div class="UserPubMainInfo" style="margin-left: 20px;">
+      <h2>{{.User.Name}}</h2>{{if ne .User.Age.Int32 0}}<span>Возвраст: <span class="age">{{.User.Age.Int32}}</span></span><br/>{{end}}
+      {{if .User.PubEmail.Bool}}<span class="email">{{.User.Email.String}}</span><br/>{{end}}
+      {{if ne .User.AboutMe.String ""}}
+      <button class="btn btn-link btn-sm px-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboteMeUserInfo" aria-expanded="false" aria-controls="aboteMeUserInfo">О себе</button>
+      <div class="collapse" id="aboteMeUserInfo" style="position: absolute; z-index: 2;">
+        <div class="card card-body">
+          <p>{{.User.AboutMe.String}}</p>
+        </div>
+      </div>{{end}}
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 row"><a class="btn btn-primary col-11 mx-auto" tabindex="-1" role="button" aria-disabled="true" style="height: 39px" href="#">Сообщения</a></div>
+</section>{{end}}
+{{define "scripts"}}{{end}}

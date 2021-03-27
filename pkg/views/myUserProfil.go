@@ -53,9 +53,9 @@ func MyUserProfil(c *gin.Context) {
 
 	defer db.Close()
 
-	row := db.QueryRow("SELECT name, avatar, email, pub_email, site, age, about_me FROM User WHERE id=$1", userId)
+	row := db.QueryRow("SELECT name, avatar, email, pub_email, cite, age, about_me FROM User WHERE id=$1", userId)
 	
-	errScan := row.Scan(&data.User.Name, &data.User.Avatar, &data.User.Email, &data.User.PubEmail, &data.User.Site, &data.User.Age, &data.User.AboutMe)
+	errScan := row.Scan(&data.User.Name, &data.User.Avatar, &data.User.Email, &data.User.PubEmail, &data.User.Cite, &data.User.Age, &data.User.AboutMe)
 
 	if errScan != nil {
 		httpErr(w, errScan, 404)

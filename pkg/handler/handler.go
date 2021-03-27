@@ -39,6 +39,7 @@ func (h *Handler) InitRouters() *gin.Engine {
 		user.GET("/me", views.MyUserProfil)
 		user.POST("/updateSettings", views.UpdateUserSettings)
 		user.POST("/updateAva", views.UpdateAva)
+		user.GET("/i/:id", views.OpenUser)
 	}
 
 	product := r.Group("/product")

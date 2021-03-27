@@ -11,9 +11,10 @@ import (
 func MyProducts(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
+	userId := SessionUserId(c)
 	isLogin := CheckLoginUser(c)
 
-	if !isLogin {
+	if !isLogin || userId == 0 {
 		http.Error(w, "ERROR", 404)
 	}
 
@@ -26,7 +27,8 @@ func MyProducts(c *gin.Context) {
 	defer db.Close()
 
 	rows, errQuery := db.Query(
-		"SELECT id, title, description, active, section_id, user_id, date, price FROM Product",
+		"SELECT id, title, description, active, section_id, user_id, date, price FROM Product WHERE user_id=$1",
+		userId,
 	)
 
 	if errQuery != nil {

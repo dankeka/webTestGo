@@ -22,7 +22,12 @@ section.product
     | {{end}}
     div.MainInfo
       h1.title {{.Product.Title}}
-      p.description.border.bg-light {{.Product.Description}}
+      div.border.bg-light
+        div.d-flex.sellerInfo
+          div.sellerAva
+            img(src="/static/avatars/{{.SellerInfo.AvaUrl}}" alt="seller_avater" class="rounded-circle sellerAvatar")
+          h3.fw-bolder.sellerName {{.SellerInfo.Name}}
+        p.description {{.Product.Description}}
       span.display-5.price Цена: {{.Product.Price}} &#8381;
 |   {{end}}
 | {{end}}

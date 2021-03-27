@@ -91,6 +91,13 @@ main {
 .product .ProductInfo .MainInfo .title {
   padding: 0 7px;
   margin-bottom: 10px; }
+.product .ProductInfo .MainInfo .sellerInfo {
+  padding: 5px; }
+  .product .ProductInfo .MainInfo .sellerInfo .sellerAvatar {
+    width: 60px;
+    height: 60px; }
+  .product .ProductInfo .MainInfo .sellerInfo .sellerName {
+    margin-left: 10px; }
 .product .ProductInfo .MainInfo .description {
   padding: 0 7px;
   min-height: 80px;

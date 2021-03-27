@@ -15,7 +15,7 @@ type User struct {
 	Name      string         `json:"name"`
 	Avatar    string         `json:"avatar"`
 	Age       sql.NullInt32  `json:"age"`
-	Site      sql.NullString `json:"site"`
+	Cite      sql.NullString `json:"cite"`
 	AboutMe   sql.NullString `json:"about_me"`
 	Email     sql.NullString `json:"email"`
 	PubEmail  sql.NullBool   `json:"pub_email"`

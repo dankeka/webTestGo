@@ -73,6 +73,22 @@ func OpenProduct(c *gin.Context) {
 		data.ImgUrls = append(data.ImgUrls, imgUrl)
 	}
 
+	sellerRow := db.QueryRow(
+		"SELECT name, avatar FROM User WHERE id=$1",
+		data.Product.UserID,
+	)
+
+	var sellerData types.UserAvaAndName
+
+	errScan = sellerRow.Scan(&sellerData.Name, &sellerData.AvaUrl)
+
+	if errScan != nil {
+		httpErr(w, errScan, 404)
+		return
+	}
+
+	data.SellerInfo = sellerData
+
 	tmpl, errTmpl := template.ParseFiles("web/templates/product.html", "web/templates/default.html")
 
 	if errTmpl != nil {
