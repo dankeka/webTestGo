@@ -1,0 +1,31 @@
+| {{template "default" .}}
+| {{define "title"}}Авторизация{{end}}
+
+| {{define "content"}}
+| {{if .IsLogin}}
+section.chatSection
+  div.chat
+    | {{range $m := .Messages}}
+    |  {{if eq $m.UserID .UserID}}
+    div.YouMessage.Message
+    |  {{else}}
+    div.Message
+    |  {{end}}
+    | {{else}}
+    | {{end}}
+  div.addMessage
+    form(action="/chat/user/{{.InterlocutorID}}/addMessage" method="post")
+      h2 Написать сообщение
+      div.mb-3.row.p-relative.b-0.r-0
+        label(for="textMsg col-12 fs-4") Текст сообщения
+        textarea(id="textMsg" name="textMsg" cols="60" rows="10")
+        input(type="hidden" name="csrf_token" value="{{.Csrf}}")
+        input(type="hidden" name="UserID" value="{{.UserID}}")
+        input(type="hidden" name="InterlocutorID" value="{{.InterlocutorID}}")
+        button(type="submit") Отправить
+         
+| {{end}}
+| {{end}}
+
+| {{define "scripts"}}
+| {{end}}

@@ -24,9 +24,10 @@ section.product
       h1.title {{.Product.Title}}
       div.border.bg-light
         div.d-flex.sellerInfo
-          div.sellerAva
-            img(src="/static/avatars/{{.SellerInfo.AvaUrl}}" alt="seller_avater" class="rounded-circle sellerAvatar")
-          h3.fw-bolder.sellerName {{.SellerInfo.Name}}
+          a(href="/user/i/{{.Product.UserID}}" class="text-decoration-none link-dark d-flex")
+            div.sellerAva
+              img(src="/static/avatars/{{.SellerInfo.AvaUrl}}" alt="seller_avater" class="rounded-circle sellerAvatar")
+            h3.fw-bolder.sellerName {{.SellerInfo.Name}}
         p.description {{.Product.Description}}
       span.display-5.price Цена: {{.Product.Price}} &#8381;
 |   {{end}}

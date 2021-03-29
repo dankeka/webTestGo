@@ -16,10 +16,9 @@
     <div class="MainInfo">
       <h1 class="title">{{.Product.Title}}</h1>
       <div class="border bg-light">
-        <div class="d-flex sellerInfo">
-          <div class="sellerAva"><img class="rounded-circle sellerAvatar" src="/static/avatars/{{.SellerInfo.AvaUrl}}" alt="seller_avater"/></div>
-          <h3 class="fw-bolder sellerName">{{.SellerInfo.Name}}</h3>
-        </div>
+        <div class="d-flex sellerInfo"><a class="text-decoration-none link-dark d-flex" href="/user/i/{{.Product.UserID}}">
+            <div class="sellerAva"><img class="rounded-circle sellerAvatar" src="/static/avatars/{{.SellerInfo.AvaUrl}}" alt="seller_avater"/></div>
+            <h3 class="fw-bolder sellerName">{{.SellerInfo.Name}}</h3></a></div>
         <p class="description">{{.Product.Description}}</p>
       </div><span class="display-5 price">Цена: {{.Product.Price}} &#8381;</span>
     </div>

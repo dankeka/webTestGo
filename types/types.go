@@ -84,3 +84,17 @@ type OpenUserAccStruct struct {
 	User    User
 	LastProducts []ProductIdAndTitleAndImg
 }
+type ChatStruct struct {
+	InterlocutorID string
+	UserID         int
+	IsLogin        bool
+	Messages       []Message
+	Csrf           string
+}
+
+type AddChatMsgStruct struct {
+	Csrf           string
+	Text           string
+	InterlocutorID string
+	UserID         string
+}

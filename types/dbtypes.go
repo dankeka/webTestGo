@@ -40,3 +40,11 @@ type Product struct {
 	DateStr     string    `json:"date_string"` // no in db
 	Price       int       `json:"price"`
 }
+
+type Message struct {
+	ID             uint      `json:"id"`
+	Text           string    `json:"text"`
+	InterlocutorID uint      `json:"interlocutor_id"`
+	UserID         uint      `json:"user_id"`
+	Date           time.Time `json:"date"`
+}

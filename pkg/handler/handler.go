@@ -50,6 +50,15 @@ func (h *Handler) InitRouters() *gin.Engine {
 		product.GET("/i/:id", views.OpenProduct)
 	}
 
+	chat := r.Group("/chat")
+	{
+		chatUser := chat.Group("/user")
+		{
+			chatUser.GET("/:id", views.OpenChat)
+			chatUser.POST("/:id/addMessage", views.AddChatMsg)
+		}
+	}
+
 	fs := http.Dir("./web/static")
 
 	r.StaticFS("/static/", fs)
