@@ -118,6 +118,14 @@ main {
     .userAcc .product > div .productInfo .price {
       font-size: 1.3em; }
 
+.chatSection .chat .Message {
+  background: #f3f3f3;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 10px; }
+.chatSection .chat .MyMessage {
+  background: #dfdfdf !important; }
+
 @media screen and (max-width: 992px) {
   header {
     padding: 0 10px 10px 10px; }

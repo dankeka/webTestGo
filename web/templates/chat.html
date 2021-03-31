@@ -3,12 +3,17 @@
 {{define "title"}}Авторизация{{end}}
 {{define "content"}}
 {{if .IsLogin}}
+{{$globUserID := .UserID}}
 <section class="chatSection">
   <div class="chat">
     {{range $m := .Messages}}
-     {{if eq $m.UserID .UserID}}
-    <div class="YouMessage Message"></div> {{else}}
-    <div class="Message"></div> {{end}}
+      {{if eq $m.UserID $globUserID}}
+    <div class="MyMessage Message mx-2"><strong>{{$m.UserName}}</strong>
+      <p>{{$m.Text}}</p>
+    </div>  {{else}}
+    <div class="Message mx-2"><strong>{{$m.UserName}}</strong>
+      <p>{{$m.Text}}</p>
+    </div>  {{end}}
     {{else}}
     {{end}}
   </div>

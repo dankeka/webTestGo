@@ -3,6 +3,7 @@ package views
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/dankeka/webTestGo/types"
 	"github.com/gin-gonic/gin"
@@ -24,12 +25,9 @@ func AddChatMsg(c *gin.Context) {
 	go func(){
 		checkCsrf := CheckCsrf(c, req.Csrf)
 
-		if !checkCsrf {
+		if !checkCsrf && <-okChan {
 			okChan <- false
-			return
 		}
-
-		okChan <- true
 	}()
 
 	go func(){
@@ -37,10 +35,7 @@ func AddChatMsg(c *gin.Context) {
 
 		if sessionUserID == 0 || fmt.Sprintf("%d", sessionUserID) != req.UserID {
 			okChan <- false
-			return
 		}
-
-		okChan <- true
 	}()
 
 	go func(){
@@ -48,25 +43,42 @@ func AddChatMsg(c *gin.Context) {
 
 		if interlocutorID != req.InterlocutorID {
 			okChan <- false
-			return
 		}
-
-		okChan <- true
 	}()
 
-	val, ok := <-okChan
-
-	if !val || !ok {
+	select {
+	case okChan <- false:
 		httpErr(w, fmt.Errorf("ERROR"), 404)
 		return
+	default:
+		// pass
 	}
+
+	close(okChan)
 
 	db, errConn := conn()
 
 	if errConn != nil {
-		httpErr(w, fmt.Errorf("ERROR"), 404)
+		httpErr(w, errConn, 404)
 		return
 	}
 
 	defer db.Close()
+
+	time := time.Now().Unix()
+
+	_, errExec := db.Exec(
+		"INSERT INTO Message(text, user_id, interlocutor_id, date) VALUES ($1, $2, $3, $4)",
+		req.Text,
+		req.UserID,
+		req.InterlocutorID,
+		time,
+	)
+
+	if errExec != nil {
+		httpErr(w, errExec, 404)
+		return
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/chat/user/%s", req.InterlocutorID), http.StatusSeeOther)
 }

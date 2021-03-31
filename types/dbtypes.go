@@ -44,7 +44,8 @@ type Product struct {
 type Message struct {
 	ID             uint      `json:"id"`
 	Text           string    `json:"text"`
-	InterlocutorID uint      `json:"interlocutor_id"`
-	UserID         uint      `json:"user_id"`
+	InterlocutorID int       `json:"interlocutor_id"`
+	UserID         int       `json:"user_id"`
 	Date           time.Time `json:"date"`
+	UserName       string    `json:"name"` // no db
 }

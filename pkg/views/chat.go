@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"sort"
 
 	"github.com/dankeka/webTestGo/types"
 	"github.com/gin-gonic/gin"
@@ -36,8 +37,9 @@ func OpenChat(c *gin.Context) {
 	defer db.Close()
 
 	rows, errQuery := db.Query(
-		"SELECT id, text, interlocutor_id, user_id, date FROM Message WHERE user_id=$1",
+		"SELECT id, text, interlocutor_id, user_id, date FROM Message WHERE (user_id=$1 AND interlocutor_id=$2) OR (user_id=$2 AND interlocutor_id=$1)",
 		userId,
+		interlocutorID,
 	)
 
 	if errQuery != nil {
@@ -62,8 +64,24 @@ func OpenChat(c *gin.Context) {
 			return
 		}
 
+		userNameRow := db.QueryRow(
+			"SELECT name FROM User WHERE id=$1",
+			m.UserID,
+		)
+
+		errScan = userNameRow.Scan(&m.UserName)
+
+		if errScan != nil {
+			httpErr(w, errScan, 404)
+			return
+		}
+
 		messages = append(messages, m)
 	}
+
+	sort.Slice(messages, func(i, j int) bool {
+		return messages[i].Date.Unix() > messages[j].Date.Unix()
+	})
 
 	data.Messages = messages
 

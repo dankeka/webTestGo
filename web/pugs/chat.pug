@@ -3,14 +3,19 @@
 
 | {{define "content"}}
 | {{if .IsLogin}}
+| {{$globUserID := .UserID}}
 section.chatSection
   div.chat
     | {{range $m := .Messages}}
-    |  {{if eq $m.UserID .UserID}}
-    div.YouMessage.Message
-    |  {{else}}
-    div.Message
-    |  {{end}}
+    |   {{if eq $m.UserID $globUserID}}
+    div.MyMessage.Message.mx-2
+      strong {{$m.UserName}}
+      p {{$m.Text}}
+    |   {{else}}
+    div.Message.mx-2
+      strong {{$m.UserName}}
+      p {{$m.Text}}
+    |   {{end}}
     | {{else}}
     | {{end}}
   div.addMessage
