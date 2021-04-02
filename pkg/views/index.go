@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Index(c *gin.Context) {
+func (h *Handler) Index(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	var data types.IndexData

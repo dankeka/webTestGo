@@ -9,16 +9,12 @@ import (
 )
 
 
-func OpenProduct(c *gin.Context) {
+func (h *Handler) OpenProduct(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	var data types.OpenProductStruct
 
 	isLogin := CheckLoginUser(c)
-
-	if !isLogin {
-		http.Error(w, "ERROR", 404)
-	}
 
 	data.IsLogin = isLogin
 
@@ -57,6 +53,7 @@ func OpenProduct(c *gin.Context) {
 
 	if errQuery != nil {
 		httpErr(w, errQuery, 404)
+		return
 	}
 
 	defer rows.Close()
@@ -68,6 +65,7 @@ func OpenProduct(c *gin.Context) {
 
 		if errScan != nil {
 			httpErr(w, errScan, 404)
+			return
 		}
 
 		data.ImgUrls = append(data.ImgUrls, imgUrl)
@@ -100,5 +98,6 @@ func OpenProduct(c *gin.Context) {
 
 	if errRenderTmpl != nil {
 		httpErr(w, errRenderTmpl, 404)
+		return
 	}
 }

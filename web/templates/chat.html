@@ -1,11 +1,12 @@
 
 {{template "default" .}}
-{{define "title"}}Авторизация{{end}}
+{{define "title"}}Чат{{end}}
 {{define "content"}}
 {{if .IsLogin}}
 {{$globUserID := .UserID}}
 <section class="chatSection">
-  <div class="chat">
+  <div class="chat">{{if gt (len .Messages) 7}}
+    <div class="px-2 mb-2"><a class="link-primary text-decoration-none" href="#addMessageText">Написать сообщение</a></div>{{end}}
     {{range $m := .Messages}}
       {{if eq $m.UserID $globUserID}}
     <div class="MyMessage Message mx-2"><strong>{{$m.UserName}}</strong>
@@ -15,18 +16,25 @@
       <p>{{$m.Text}}</p>
     </div>  {{end}}
     {{else}}
-    {{end}}
+    <div class="px-4 mb-3"><span class="display-5 text-muted">пока что тут пусто :(</span></div>{{end}}
   </div>
   <div class="addMessage">
     <form action="/chat/user/{{.InterlocutorID}}/addMessage" method="post">
-      <h2>Написать сообщение</h2>
-      <div class="mb-3 row p-relative b-0 r-0">
-        <label for="textMsg col-12 fs-4">Текст сообщения</label>
-        <textarea id="textMsg" name="textMsg" cols="60" rows="10"></textarea>
+      <div class="mb-3 row p-relative b-0 r-0 px-4">
+        <hr/>
+        <div>
+          <h2 id="addMessageText">Написать сообщение</h2>
+        </div>
+        <div class="mb-3">
+          <label for="textMsg">Текст сообщения</label>
+          <textarea class="form-control" id="textMsg" name="textMsg" cols="60" rows="10"></textarea>
+        </div>
         <input type="hidden" name="csrf_token" value="{{.Csrf}}"/>
         <input type="hidden" name="UserID" value="{{.UserID}}"/>
         <input type="hidden" name="InterlocutorID" value="{{.InterlocutorID}}"/>
-        <button type="submit">Отправить</button>
+        <div class="mb-3">
+          <button class="btn btn-outline-dark" type="submit">Отправить</button>
+        </div>
       </div>
     </form>
   </div>

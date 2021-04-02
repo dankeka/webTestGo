@@ -125,6 +125,14 @@ main {
   border-radius: 10px; }
 .chatSection .chat .MyMessage {
   background: #dfdfdf !important; }
+.chatSection .addMessage form textarea {
+  border-radius: 10px;
+  margin-bottom: 10px; }
+
+.chats .chatList .chat {
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  padding: 5px; }
 
 @media screen and (max-width: 992px) {
   header {

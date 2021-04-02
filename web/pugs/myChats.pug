@@ -1,0 +1,18 @@
+| {{template "default" .}}
+
+| {{define "title"}}Мои чаты{{end}}
+
+| {{define "content"}}
+section.chats
+  div.chatList
+    | {{range $s := .Chats}}
+    div.chat.mb-3
+      a(href="/chat/user/{{$s.InterlocutorID}}" class="link-dark text-decoration-none")
+        h2 {{$s.ChatUserName}}
+      span.lastMsg {{$s.LastMsg}}
+    | {{else}}
+    span.display-5 Пусто
+    | {{end}}
+| {{end}}
+
+| {{define "scripts"}}{{end}}

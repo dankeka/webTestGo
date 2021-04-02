@@ -17,7 +17,7 @@
       </div>{{end}}
     </div>
   </div>
-  <div class="col-12 col-lg-6 row"><a class="btn btn-primary col-11 mx-auto" tabindex="-1" role="button" aria-disabled="true" style="height: 39px" href="#">Сообщения</a></div>
+  <div class="col-12 col-lg-6 row"><a class="btn btn-primary col-11 mx-auto" tabindex="-1" role="button" aria-disabled="true" style="height: 39px" href="/chat/user/{{.User.ID}}">Сообщения</a></div>
   <div class="col-12 row px-3 mx-auto">
     <h2 class="px-2">Последние объявления</h2>{{range $p := .LastProducts}}
     <div class="product row col-11 col-md-6 col-xs-3">

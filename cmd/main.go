@@ -9,12 +9,12 @@ import (
 	"syscall"
 
 	serv "github.com/dankeka/webTestGo"
-	"github.com/dankeka/webTestGo/pkg/handler"
+	"github.com/dankeka/webTestGo/pkg/views"
 )
 
 
 func main() {
-	handlers := new(handler.Handler)
+	handlers := new(views.Handler)
 
 	srv := new(serv.Server)
 

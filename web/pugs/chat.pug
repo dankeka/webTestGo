@@ -1,11 +1,15 @@
 | {{template "default" .}}
-| {{define "title"}}Авторизация{{end}}
+| {{define "title"}}Чат{{end}}
 
 | {{define "content"}}
 | {{if .IsLogin}}
 | {{$globUserID := .UserID}}
 section.chatSection
   div.chat
+    | {{if gt (len .Messages) 7}}
+    div.px-2.mb-2
+      a(href="#addMessageText" class="link-primary text-decoration-none") Написать сообщение
+    | {{end}}
     | {{range $m := .Messages}}
     |   {{if eq $m.UserID $globUserID}}
     div.MyMessage.Message.mx-2
@@ -17,17 +21,23 @@ section.chatSection
       p {{$m.Text}}
     |   {{end}}
     | {{else}}
+    div.px-4.mb-3
+      span.display-5.text-muted пока что тут пусто :(
     | {{end}}
   div.addMessage
     form(action="/chat/user/{{.InterlocutorID}}/addMessage" method="post")
-      h2 Написать сообщение
-      div.mb-3.row.p-relative.b-0.r-0
-        label(for="textMsg col-12 fs-4") Текст сообщения
-        textarea(id="textMsg" name="textMsg" cols="60" rows="10")
+      div.mb-3.row.p-relative.b-0.r-0.px-4
+        hr
+        div
+          h2#addMessageText Написать сообщение
+        div.mb-3
+          label(for="textMsg") Текст сообщения
+          textarea(id="textMsg" name="textMsg" class="form-control" cols="60" rows="10")
         input(type="hidden" name="csrf_token" value="{{.Csrf}}")
         input(type="hidden" name="UserID" value="{{.UserID}}")
         input(type="hidden" name="InterlocutorID" value="{{.InterlocutorID}}")
-        button(type="submit") Отправить
+        div.mb-3
+          button(type="submit" class="btn btn-outline-dark") Отправить
          
 | {{end}}
 | {{end}}

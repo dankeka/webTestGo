@@ -1,0 +1,11 @@
+
+{{template "default" .}}
+{{define "title"}}Мои чаты{{end}}
+{{define "content"}}
+<section class="chats">
+  <div class="chatList">{{range $s := .Chats}}
+    <div class="chat mb-3"><a class="link-dark text-decoration-none" href="/chat/user/{{$s.InterlocutorID}}">
+        <h2>{{$s.ChatUserName}}</h2></a><span class="lastMsg">{{$s.LastMsg}}</span></div>{{else}}<span class="display-5">Пусто</span>{{end}}
+  </div>
+</section>{{end}}
+{{define "scripts"}}{{end}}

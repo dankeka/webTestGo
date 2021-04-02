@@ -10,7 +10,7 @@ import (
 )
 
 
-func UpdateAva(c *gin.Context) {
+func (h *Handler) UpdateAva(c *gin.Context) {
 	var r *http.Request = c.Request
 	var w http.ResponseWriter = c.Writer
 

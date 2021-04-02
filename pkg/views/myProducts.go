@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func MyProducts(c *gin.Context) {
+func (h *Handler) MyProducts(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	userId := SessionUserId(c)

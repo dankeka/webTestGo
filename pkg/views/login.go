@@ -28,7 +28,7 @@ func DeleteErrLoginCookie(c *gin.Context) {
 
 
 // GET
-func LoginGet(c *gin.Context) {
+func (h *Handler) LoginGet(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	tmpl, errTmpl := template.ParseFiles("web/templates/login.html", "web/templates/default.html")
@@ -68,7 +68,7 @@ func LoginGet(c *gin.Context) {
 
 
 // POST
-func LoginPost(c *gin.Context) {
+func (h *Handler) LoginPost(c *gin.Context) {
 	var r *http.Request = c.Request
 	var w http.ResponseWriter = c.Writer
 
@@ -138,7 +138,7 @@ func LoginPost(c *gin.Context) {
 }
 
 // GET
-func Logout(c *gin.Context) {
+func (h *Handler) Logout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Delete("UserId")
 	session.Save()

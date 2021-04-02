@@ -29,7 +29,7 @@ func DeleteImages(listName []string) error {
 }
 
 
-func AddProductGet(c *gin.Context) {
+func (h *Handler) AddProductGet(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	checkLogin := CheckLoginUser(c)
@@ -96,7 +96,7 @@ func AddProductGet(c *gin.Context) {
 }
 
 
-func AddProductPost(c *gin.Context) {
+func (h *Handler) AddProductPost(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 	var r *http.Request = c.Request
 

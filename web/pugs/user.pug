@@ -25,7 +25,7 @@ section.userAcc.row
           p {{.User.AboutMe.String}}
       | {{end}}
   div.col-12.col-lg-6.row
-    a(tabindex="-1" role="button" aria-disabled="true" class="btn btn-primary col-11 mx-auto" style="height: 39px" href="#") Сообщения
+    a(tabindex="-1" role="button" aria-disabled="true" class="btn btn-primary col-11 mx-auto" style="height: 39px" href="/chat/user/{{.User.ID}}") Сообщения
   div.col-12.row.px-3.mx-auto
     h2.px-2 Последние объявления
     | {{range $p := .LastProducts}}

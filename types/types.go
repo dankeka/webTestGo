@@ -98,3 +98,14 @@ type AddChatMsgStruct struct {
 	InterlocutorID string
 	UserID         string
 }
+
+type Chat struct {
+	InterlocutorID uint
+	ChatUserName   string
+	LastMsg        string
+}
+
+type MyChatsStruct struct {
+	Chats   []Chat
+	IsLogin bool
+}

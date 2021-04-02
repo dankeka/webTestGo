@@ -27,7 +27,7 @@ func DeleteErrRegisterCookie(c *gin.Context) {
 
 
 // GET
-func RegisterTmpl(c *gin.Context) {
+func (h *Handler) RegisterTmpl(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	tmpl, errTmpl := template.ParseFiles("web/templates/register.html", "web/templates/default.html")
@@ -72,7 +72,7 @@ func RegisterTmpl(c *gin.Context) {
 
 
 // POST
-func RegisterPost(c *gin.Context) {
+func (h *Handler) RegisterPost(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 	var r *http.Request = c.Request
 
@@ -116,9 +116,7 @@ func RegisterPost(c *gin.Context) {
 	row := db.QueryRow("SELECT id FROM User WHERE name=$1 OR email=$2", username, email)
 
 	var checkUserName sql.NullInt32
-	errScan := row.Scan(&checkUserName)
-
-	if errScan != nil && errScan != sql.ErrNoRows {
+	if errScan := row.Scan(&checkUserName); errScan != nil && errScan != sql.ErrNoRows {
 		httpErr(w, errScan, 404)
 		return
 	}

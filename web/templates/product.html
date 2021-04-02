@@ -2,7 +2,6 @@
 {{template "default" .}}
 {{define "title"}}{{.Product.Title}}{{end}}
 {{define "content"}}
-  {{if .IsLogin}}
 <section class="product">
   <div class="ProductInfo">{{if .ImgUrls}}
     <div class="carousel slide" id="productImgCarousel" data-bs-ride="carousel">
@@ -23,8 +22,7 @@
       </div><span class="display-5 price">Цена: {{.Product.Price}} &#8381;</span>
     </div>
   </div>
-</section>  {{end}}
-{{end}}
+</section>{{end}}
 {{define "scripts"}}
 <script>
   try {

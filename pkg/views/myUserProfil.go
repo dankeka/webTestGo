@@ -11,7 +11,7 @@ import (
 )
 
 
-func MyUserProfil(c *gin.Context) {
+func (h *Handler) MyUserProfil(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	
@@ -26,6 +26,20 @@ func MyUserProfil(c *gin.Context) {
 		data.User.ID = 0
 		data.User.Name = ""
 		data.User.Avatar = ""
+		data.User.AboutMe.String = ""
+		data.User.Email.String = ""
+		data.User.PubEmail.Bool = false
+		data.User.Cite.String = ""
+		data.User.Age.Int32 = 0
+
+		csrfToken, errgenerateCsrf := CsrfGenerate(c)
+
+		if errgenerateCsrf != nil {
+			httpErr(w, errgenerateCsrf, 404)
+			return
+		}
+
+		data.Csrf = csrfToken
 
 		tmpl, errTmpl := template.ParseFiles("web/templates/myUserProfil.html", "web/templates/default.html")
 
@@ -85,7 +99,7 @@ func MyUserProfil(c *gin.Context) {
 }
 
 
-func UpdateUserSettings(c *gin.Context) {
+func (h *Handler) UpdateUserSettings(c *gin.Context) {
 	var r *http.Request = c.Request
 	var w http.ResponseWriter = c.Writer
 

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func OpenUser(c *gin.Context) {
+func (h *Handler) OpenUser(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
 	userId := c.Param("id")
